@@ -1,0 +1,342 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    max-width: 800px;
+    width: 90%;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+header h1 {
+    color: #4a5568;
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+header p {
+    color: #718096;
+    font-size: 1.2em;
+}
+
+.game-nav {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.nav-btn {
+    background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-size: 0.9em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.nav-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.letter-display {
+    text-align: center;
+    background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+#current-letter {
+    font-size: 8em;
+    font-weight: bold;
+    color: #2d3748;
+    text-shadow: 3px 3px 6px rgba(0,0,0,0.2);
+}
+
+#letter-word {
+    font-size: 2em;
+    color: #4a5568;
+    margin: 10px 0;
+    font-weight: bold;
+}
+
+#letter-image {
+    font-size: 4em;
+    margin-top: 15px;
+}
+
+.alphabet-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.letter-btn {
+    background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+    border: none;
+    border-radius: 10px;
+    padding: 15px;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #2d3748;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.letter-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+.letter-btn.active {
+    background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+    transform: scale(1.1);
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.btn-primary, .btn-secondary {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+    color: #2d3748;
+}
+
+.btn-primary:hover, .btn-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.game-modes {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.mode-btn {
+    padding: 15px 25px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: #e2e8f0;
+    color: #4a5568;
+}
+
+.mode-btn.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    transform: scale(1.05);
+}
+
+.game-section {
+    transition: all 0.3s ease;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Estilos para montar palavras */
+.word-challenge {
+    text-align: center;
+}
+
+.target-word {
+    background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+#word-image {
+    font-size: 5em;
+    margin-bottom: 15px;
+}
+
+#word-hint {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #2d3748;
+    letter-spacing: 0.2em;
+}
+
+.word-slots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 30px;
+    min-height: 80px;
+    align-items: center;
+}
+
+.letter-slot {
+    width: 60px;
+    height: 60px;
+    border: 3px dashed #cbd5e0;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2em;
+    font-weight: bold;
+    background: #f7fafc;
+    transition: all 0.3s ease;
+}
+
+.letter-slot.filled {
+    border: 3px solid #48bb78;
+    background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+}
+
+.letter-slot.drop-target {
+    border-color: #667eea;
+    background: #e6fffa;
+    transform: scale(1.1);
+}
+
+.available-letters {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.draggable-letter {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+    border: none;
+    border-radius: 10px;
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #2d3748;
+    cursor: grab;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.draggable-letter:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+.draggable-letter.dragging {
+    opacity: 0.5;
+    cursor: grabbing;
+    transform: rotate(5deg);
+}
+
+.draggable-letter.used {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.word-controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.phase-info {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #4a5568;
+    margin-bottom: 20px;
+}
+
+.score-area {
+    text-align: center;
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #4a5568;
+    background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e0 100%);
+    border-radius: 15px;
+    padding: 15px;
+}
+
+@media (max-width: 600px) {
+    .alphabet-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    #current-letter {
+        font-size: 6em;
+    }
+    
+    .controls, .word-controls {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .game-modes {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .word-slots {
+        flex-wrap: wrap;
+    }
+    
+    .letter-slot {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5em;
+    }
+    
+    #word-hint {
+        font-size: 2em;
+    }
+}
