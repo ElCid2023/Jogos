@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutorial - Google Forms para EduGames Brasil</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 15px;
+        }
+        h2 {
+            color: #34495e;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-top: 40px;
+            font-size: 1.5em;
+        }
+        .step {
+            background: #ecf0f1;
+            border-left: 5px solid #e74c3c;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .step h3 {
+            color: #2c3e50;
+            margin-top: 0;
+            font-size: 1.3em;
+        }
+        .highlight {
+            background: #f39c12;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .code-box {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .success {
+            background: #d5f4e6;
+            border: 1px solid #27ae60;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .visual-step {
+            background: #e8f4fd;
+            border: 2px solid #3498db;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .button-example {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .form-field {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            font-family: monospace;
+        }
+        ol {
+            counter-reset: step-counter;
+        }
+        ol li {
+            counter-increment: step-counter;
+            margin: 15px 0;
+            padding-left: 10px;
+        }
+        ol li::marker {
+            content: "🔹 " counter(step-counter) ". ";
+            font-weight: bold;
+            color: #3498db;
+        }
+        .final-result {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 30px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Tutorial: Google Forms para EduGames Brasil</h1>
+        
+        <div class="success">
+            <h3>🎯 Objetivo:</h3>
+            <p>Configurar Google Forms para receber automaticamente os resultados dos alunos no jogo de cálculos, sem que eles precisem digitar ou falar suas notas.</p>
+        </div>
+
+        <h2>📋 PASSO 1: Criar o Google Forms</h2>
+        
+        <div class="step">
+            <h3>1.1 Acessar Google Forms</h3>
+            <ol>
+                <li>Abra seu navegador</li>
+                <li>Vá para: <span class="highlight">forms.google.com</span></li>
+                <li>Faça login com sua conta Google</li>
+                <li>Clique em <button class="button-example">+ Criar formulário em branco</button></li>
+            </ol>
+        </div>
+
+        <div class="step">
+            <h3>1.2 Configurar Título do Formulário</h3>
+            <div class="visual-step">
+                <p><strong>Título:</strong> <span class="form-field">EduGames Brasil - Resultados dos Alunos</span></p>
+                <p><strong>Descrição:</strong> <span class="form-field">Resultados automáticos do jogo de cálculos</span></p>
+            </div>
+        </div>
+
+        <h2>📝 PASSO 2: Criar os Campos do Formulário</h2>
+
+        <div class="warning">
+            <h4>⚠️ IMPORTANTE:</h4>
+            <p>Crie os campos <strong>EXATAMENTE</strong> nesta ordem e com estes nomes:</p>
+        </div>
+
+        <div class="step">
+            <h3>2.1 Campo 1: Nome do Aluno</h3>
+            <div class="visual-step">
+                <p><strong>Tipo:</strong> Resposta curta</p>
+                <p><strong>Pergunta:</strong> <span class="form-field">Nome do Aluno</span></p>
+                <p><strong>Obrigatório:</strong> ✅ Sim</p>
+            </div>
+        </div>
+
+        <div class="step">
+            <h3>2.2 Campo 2: Nota Final</h3>
+            <div class="visual-step">
+                <p><strong>Tipo:</strong> Resposta curta</p>
+                <p><strong>Pergunta:</strong> <span class="form-field">Nota Final</span></p>
+                <p><strong>Obrigatório:</strong> ✅ Sim</p>
+            </div>
+        </div>
+
+        <div class="step">
+            <h3>2.3 Campo 3: Data</h3>
+            <div class="visual-step">
+                <p><strong>Tipo:</strong> Resposta curta</p>
+                <p><strong>Pergunta:</strong> <span class="form-field">Data</span></p>
+                <p><strong>Obrigatório:</strong> ✅ Sim</p>
+            </div>
+        </div>
+
+        <div class="step">
+            <h3>2.4 Campo 4: Tempo Total</h3>
+            <div class="visual-step">
+                <p><strong>Tipo:</strong> Resposta curta</p>
+                <p><strong>Pergunta:</strong> <span class="form-field">Tempo Total</span></p>
+                <p><strong>Obrigatório:</strong> ✅ Sim</p>
+            </div>
+        </div>
+
+        <div class="step">
+            <h3>2.5 Campo 5: Detalhes das Notas</h3>
+            <div class="visual-step">
+                <p><strong>Tipo:</strong> Parágrafo</p>
+                <p><strong>Pergunta:</strong> <span class="form-field">Detalhes das Notas por Área</span></p>
+                <p><strong>Obrigatório:</strong> ✅ Sim</p>
+            </div>
+        </div>
+
+        <h2>🔗 PASSO 3: Obter URL do Formulário</h2>
+
+        <div class="step">
+            <h3>3.1 Pegar Link de Envio</h3>
+            <ol>
+                <li>No formulário criado, clique em <button class="button-example">Enviar</button></li>
+                <li>Clique na aba <button class="button-example">🔗</button> (Link)</li>
+                <li>Copie a URL que aparece</li>
+                <li>A URL será algo como:</li>
+            </ol>
+            <div class="code-box">
+https://docs.google.com/forms/d/e/1FAIpQLSe_EXEMPLO_123456789/viewform
+            </div>
+        </div>
+
+        <div class="step">
+            <h3>3.2 Transformar em URL de Envio</h3>
+            <p>Substitua <span class="highlight">viewform</span> por <span class="highlight">formResponse</span>:</p>
+            <div class="code-box">
+https://docs.google.com/forms/d/e/1FAIpQLSe_EXEMPLO_123456789/formResponse
+            </div>
+        </div>
+
+        <h2>🔍 PASSO 4: Obter IDs dos Campos</h2>
+
+        <div class="warning">
+            <h4>⚠️ PARTE TÉCNICA:</h4>
+            <p>Esta parte é um pouco mais técnica, mas é essencial!</p>
+        </div>
+
+        <div class="step">
+            <h3>4.1 Inspecionar Formulário</h3>
+            <ol>
+                <li>Abra o formulário no modo <strong>visualização</strong></li>
+                <li>Pressione <span class="highlight">F12</span> (abrir DevTools)</li>
+                <li>Clique com botão direito no primeiro campo</li>
+                <li>Selecione <span class="highlight">Inspecionar elemento</span></li>
+                <li>Procure por <span class="highlight">name="entry.XXXXXXXXXX"</span></li>
+                <li>Anote o número após "entry."</li>
+            </ol>
+        </div>
+
+        <div class="step">
+            <h3>4.2 Anotar Todos os IDs</h3>
+            <div class="visual-step">
+                <p><strong>Campo "Nome do Aluno":</strong> <span class="form-field">entry.1111111111</span></p>
+                <p><strong>Campo "Nota Final":</strong> <span class="form-field">entry.2222222222</span></p>
+                <p><strong>Campo "Data":</strong> <span class="form-field">entry.3333333333</span></p>
+                <p><strong>Campo "Tempo Total":</strong> <span class="form-field">entry.4444444444</span></p>
+                <p><strong>Campo "Detalhes":</strong> <span class="form-field">entry.5555555555</span></p>
+            </div>
+        </div>
+
+        <h2>💻 PASSO 5: Configurar o Código</h2>
+
+        <div class="step">
+            <h3>5.1 Código para Adicionar ao JavaScript</h3>
+            <div class="code-box">
+sendToGoogleForms() {
+    const formUrl = 'SUA_URL_AQUI/formResponse';
+    
+    const formData = new FormData();
+    formData.append('entry.SEU_ID_1', this.studentName);
+    formData.append('entry.SEU_ID_2', document.getElementById('final-grade').textContent);
+    formData.append('entry.SEU_ID_3', document.getElementById('session-date').textContent);
+    formData.append('entry.SEU_ID_4', document.getElementById('total-time').textContent);
+    formData.append('entry.SEU_ID_5', `Operações: ${document.getElementById('basic-grade').textContent} | Frações: ${document.getElementById('fractions-grade').textContent}`);
+    
+    fetch(formUrl, {
+        method: 'POST',
+        body: formData,
+        mode: 'no-cors'
+    });
+    
+    alert('✅ Resultado enviado para o professor!');
+}
+            </div>
+        </div>
+
+        <div class="step">
+            <h3>5.2 Substituir Valores</h3>
+            <ol>
+                <li>Substitua <span class="highlight">SUA_URL_AQUI</span> pela URL do seu formulário</li>
+                <li>Substitua <span class="highlight">SEU_ID_1, SEU_ID_2, etc.</span> pelos IDs que você anotou</li>
+                <li>Salve o arquivo JavaScript</li>
+                <li>Faça upload no GitHub</li>
+            </ol>
+        </div>
+
+        <h2>📊 PASSO 6: Ver Resultados</h2>
+
+        <div class="step">
+            <h3>6.1 Acessar Planilha de Respostas</h3>
+            <ol>
+                <li>No Google Forms, clique em <button class="button-example">Respostas</button></li>
+                <li>Clique no ícone <button class="button-example">📊</button> (Criar planilha)</li>
+                <li>Escolha <span class="highlight">Criar nova planilha</span></li>
+                <li>A planilha será criada automaticamente</li>
+            </ol>
+        </div>
+
+        <div class="final-result">
+            <h3>🎉 RESULTADO FINAL</h3>
+            <p><strong>Alunos fazem o jogo → Clicam "Enviar para Professor" → Você recebe automaticamente na planilha!</strong></p>
+            <p>✅ Sem mentira dos alunos<br>
+            ✅ Dados completos e precisos<br>
+            ✅ Planilha organizada<br>
+            ✅ Tempo real</p>
+        </div>
+
+        <div class="success">
+            <h4>💡 Dicas Extras:</h4>
+            <ul>
+                <li><strong>Compartilhe a planilha</strong> com outros professores</li>
+                <li><strong>Configure notificações</strong> para receber email a cada resposta</li>
+                <li><strong>Use filtros</strong> na planilha para analisar por turma/data</li>
+                <li><strong>Exporte dados</strong> para Excel se necessário</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
