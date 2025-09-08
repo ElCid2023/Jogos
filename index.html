@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo de Cálculos - 10 a 14 anos</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🧮 Jogo de Cálculos 🧮</h1>
+            <p>Matemática Avançada para 10-14 anos</p>
+            <div class="game-nav">
+                <button onclick="window.location.href='../index.html'" class="nav-btn">🏠 Início</button>
+                <button onclick="window.location.href='../jogo-gramatica/index.html'" class="nav-btn">📚 Gramática</button>
+            </div>
+        </header>
+
+        <div class="student-info">
+            <input type="text" id="student-name" placeholder="Digite seu nome" maxlength="30">
+            <button id="start-session" class="btn-primary">Iniciar Sessão</button>
+        </div>
+
+        <div id="game-area" class="hidden">
+            <div class="game-modes">
+                <button id="basic-mode" class="mode-btn active">➕ Operações Básicas</button>
+                <button id="fractions-mode" class="mode-btn">🍰 Frações</button>
+                <button id="equations-mode" class="mode-btn">📐 Equações</button>
+                <button id="geometry-mode" class="mode-btn">📏 Geometria</button>
+            </div>
+
+            <!-- Operações Básicas -->
+            <div id="basic-section" class="game-section">
+                <div class="problem-display">
+                    <div id="basic-problem">125 × 47 = ?</div>
+                    <div class="difficulty-info">Nível: <span id="basic-level">1</span></div>
+                </div>
+                
+                <div class="answer-input">
+                    <input type="number" id="basic-answer" placeholder="Sua resposta">
+                    <button id="check-basic" class="btn-primary">✅ Verificar</button>
+                </div>
+            </div>
+
+            <!-- Frações -->
+            <div id="fractions-section" class="game-section hidden">
+                <div class="problem-display">
+                    <div id="fractions-problem">2/3 + 1/4 = ?</div>
+                    <div class="visual-fraction" id="fraction-visual">
+                        <div class="fraction-bars"></div>
+                    </div>
+                </div>
+                
+                <div class="fraction-input">
+                    <input type="number" id="numerator" placeholder="Numerador">
+                    <span>/</span>
+                    <input type="number" id="denominator" placeholder="Denominador">
+                    <button id="check-fraction" class="btn-primary">✅ Verificar</button>
+                </div>
+            </div>
+
+            <!-- Equações -->
+            <div id="equations-section" class="game-section hidden">
+                <div class="problem-display">
+                    <div id="equation-problem">2x + 5 = 13</div>
+                    <div class="equation-hint">Encontre o valor de x</div>
+                </div>
+                
+                <div class="answer-input">
+                    <span>x = </span>
+                    <input type="number" id="equation-answer" placeholder="Valor de x">
+                    <button id="check-equation" class="btn-primary">✅ Verificar</button>
+                </div>
+            </div>
+
+            <!-- Geometria -->
+            <div id="geometry-section" class="game-section hidden">
+                <div class="problem-display">
+                    <div id="geometry-problem">Área do retângulo:</div>
+                    <div class="geometry-visual" id="geometry-shape">
+                        <div class="rectangle">
+                            <span class="dimension">8 cm</span>
+                            <span class="dimension vertical">5 cm</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="answer-input">
+                    <input type="number" id="geometry-answer" placeholder="Área em cm²">
+                    <button id="check-geometry" class="btn-primary">✅ Verificar</button>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button id="next-problem" class="btn-secondary">➡️ Próximo</button>
+                <button id="hint-btn" class="btn-secondary">💡 Dica</button>
+                <button id="finish-session" class="btn-warning">🏁 Finalizar Sessão</button>
+            </div>
+
+            <div class="stats-area">
+                <div class="stat">Acertos: <span id="correct-count">0</span></div>
+                <div class="stat">Total: <span id="total-count">0</span></div>
+                <div class="stat">Nota: <span id="current-grade">0.0</span></div>
+                <div class="stat">Tempo: <span id="session-time">00:00</span></div>
+            </div>
+        </div>
+
+        <!-- Relatório Final -->
+        <div id="report-section" class="hidden">
+            <div class="report-card">
+                <h2>📊 Relatório de Desempenho</h2>
+                <div class="student-name">Aluno: <span id="report-name"></span></div>
+                <div class="final-grade">Nota Final: <span id="final-grade">0.0</span></div>
+                
+                <div class="performance-details">
+                    <div class="detail-row">
+                        <span>Operações Básicas:</span>
+                        <span id="basic-performance">0/0</span>
+                        <span id="basic-grade">0.0</span>
+                    </div>
+                    <div class="detail-row">
+                        <span>Frações:</span>
+                        <span id="fractions-performance">0/0</span>
+                        <span id="fractions-grade">0.0</span>
+                    </div>
+                    <div class="detail-row">
+                        <span>Equações:</span>
+                        <span id="equations-performance">0/0</span>
+                        <span id="equations-grade">0.0</span>
+                    </div>
+                    <div class="detail-row">
+                        <span>Geometria:</span>
+                        <span id="geometry-performance">0/0</span>
+                        <span id="geometry-grade">0.0</span>
+                    </div>
+                </div>
+                
+                <div class="time-info">
+                    <div>Tempo Total: <span id="total-time">00:00</span></div>
+                    <div>Data: <span id="session-date"></span></div>
+                </div>
+                
+                <div class="report-actions">
+                    <button id="print-report" class="btn-primary">🖨️ Imprimir Relatório</button>
+                    <button id="new-session" class="btn-secondary">🔄 Nova Sessão</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
