@@ -1,0 +1,306 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.container {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    max-width: 900px;
+    width: 100%;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+header h1 {
+    color: #4a5568;
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+header p {
+    color: #718096;
+    font-size: 1.2em;
+}
+
+.game-nav {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.nav-btn {
+    background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-size: 0.9em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.nav-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.game-modes {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.mode-btn {
+    padding: 15px 25px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: #e2e8f0;
+    color: #4a5568;
+}
+
+.mode-btn.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    transform: scale(1.05);
+}
+
+.game-section {
+    transition: all 0.3s ease;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Seção Números */
+.number-display {
+    text-align: center;
+    background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+#current-number {
+    font-size: 8em;
+    font-weight: bold;
+    color: #2d3748;
+    text-shadow: 3px 3px 6px rgba(0,0,0,0.2);
+}
+
+#number-word {
+    font-size: 2em;
+    color: #4a5568;
+    margin: 10px 0;
+    font-weight: bold;
+}
+
+#visual-count {
+    font-size: 2em;
+    margin-top: 15px;
+    line-height: 1.2;
+}
+
+.numbers-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.number-btn {
+    background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+    border: none;
+    border-radius: 10px;
+    padding: 15px;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #2d3748;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.number-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+.number-btn.active {
+    background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+    transform: scale(1.1);
+}
+
+/* Seção Matemática */
+.math-problem {
+    text-align: center;
+    background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+#math-display {
+    font-size: 4em;
+    font-weight: bold;
+    color: #2d3748;
+    margin-bottom: 15px;
+}
+
+#visual-math {
+    font-size: 2em;
+    color: #4a5568;
+}
+
+.answer-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.answer-btn {
+    background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+    border: none;
+    border-radius: 15px;
+    padding: 20px;
+    font-size: 2em;
+    font-weight: bold;
+    color: #2d3748;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.answer-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+.answer-btn.correct {
+    background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+    color: white;
+}
+
+.answer-btn.incorrect {
+    background: linear-gradient(135deg, #f56565 0%, #e53e3e 100%);
+    color: white;
+}
+
+.controls, .math-controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.btn-primary, .btn-secondary {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+    color: #2d3748;
+}
+
+.btn-primary:hover, .btn-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.difficulty {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.difficulty label {
+    font-weight: bold;
+    color: #4a5568;
+    margin-right: 10px;
+}
+
+.difficulty select {
+    padding: 8px 15px;
+    border-radius: 10px;
+    border: 2px solid #e2e8f0;
+    font-size: 1em;
+    background: white;
+}
+
+.score-area {
+    display: flex;
+    justify-content: space-around;
+    background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e0 100%);
+    border-radius: 15px;
+    padding: 20px;
+}
+
+.score, .streak {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #4a5568;
+}
+
+@media (max-width: 600px) {
+    .numbers-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .answer-options {
+        grid-template-columns: 1fr;
+    }
+    
+    #current-number {
+        font-size: 6em;
+    }
+    
+    #math-display {
+        font-size: 3em;
+    }
+    
+    .game-modes {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .score-area {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+}
