@@ -158,14 +158,19 @@ class ExpandedMathGame {
         
         // Limpar resposta anterior
         document.getElementById('answer-input').value = '';
-        document.getElementById('answer-input').focus();
         
-        // Configurar múltipla escolha para níveis avançados
-        if (this.currentAge === '15-18' && this.currentMode === 'functions') {
+        // Configurar tipo de resposta baseado na idade
+        if (this.currentAge === '7-10') {
+            // Crianças: sempre múltipla escolha
+            this.setupMultipleChoice();
+        } else if (this.currentAge === '15-18' && (this.currentMode === 'functions' || this.currentMode === 'formulas')) {
+            // Ensino médio: múltipla escolha para funções e fórmulas
             this.setupMultipleChoice();
         } else {
+            // Outros casos: digitação
             document.getElementById('multiple-choice').classList.add('hidden');
             document.getElementById('input-answer').classList.remove('hidden');
+            document.getElementById('answer-input').focus();
         }
     }
     
@@ -182,7 +187,14 @@ class ExpandedMathGame {
         // Adicionar opções incorretas baseadas no tipo de problema
         while (options.length < 4) {
             let wrongAnswer;
-            if (this.currentMode === 'functions') {
+            if (this.currentAge === '7-10') {
+                // Para crianças: opções simples próximas à resposta
+                const correct = parseInt(correctAnswer);
+                wrongAnswer = (correct + Math.floor(Math.random() * 6) - 3).toString();
+                if (wrongAnswer === '0' || wrongAnswer.includes('-')) {
+                    wrongAnswer = (correct + Math.floor(Math.random() * 3) + 1).toString();
+                }
+            } else if (this.currentMode === 'functions') {
                 wrongAnswer = (parseInt(correctAnswer) + Math.floor(Math.random() * 10) - 5).toString();
             } else if (this.currentMode === 'financial') {
                 wrongAnswer = (parseFloat(correctAnswer) * (0.8 + Math.random() * 0.4)).toFixed(2);
@@ -190,7 +202,7 @@ class ExpandedMathGame {
                 wrongAnswer = (parseFloat(correctAnswer) + Math.random() * 20 - 10).toFixed(2);
             }
             
-            if (!options.includes(wrongAnswer) && wrongAnswer !== correctAnswer) {
+            if (!options.includes(wrongAnswer) && wrongAnswer !== correctAnswer && wrongAnswer > 0) {
                 options.push(wrongAnswer);
             }
         }
