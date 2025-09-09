@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduGames Brasil - Jogos Educativos Interativos</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #4a5568;
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #718096;
+            font-size: 1.3em;
+            margin-bottom: 40px;
+        }
+        
+        .age-section {
+            text-align: center;
+        }
+        
+        .age-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .age-btn {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border: none;
+            border-radius: 15px;
+            padding: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-decoration: none;
+            color: #2d3748;
+        }
+        
+        .age-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+        
+        .age-icon {
+            font-size: 4em;
+            margin-bottom: 15px;
+        }
+        
+        .age-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .age-description {
+            font-size: 1em;
+            color: #4a5568;
+        }
+        
+        .games-section {
+            text-align: center;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .back-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .game-card {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-radius: 15px;
+            padding: 30px;
+            text-decoration: none;
+            color: #2d3748;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            display: block;
+        }
+        
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+        
+        .game-icon {
+            font-size: 4em;
+            margin-bottom: 15px;
+        }
+        
+        .game-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .game-description {
+            font-size: 1em;
+            color: #4a5568;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #718096;
+        }
+        
+        @media (max-width: 600px) {
+            .games-grid, .age-options {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Solicitação de Nome -->
+        <div id="name-input" class="age-section">
+            <h1>🎮 EduGames Brasil 🎮</h1>
+            <p class="subtitle">Bem-vindos! Primeiro, me digam qual é o seu nome:</p>
+            
+            <div style="text-align: center; margin: 30px 0;">
+                <input type="text" id="student-name" placeholder="Digite seu nome aqui" style="padding: 15px; font-size: 1.2em; border-radius: 10px; border: 2px solid #667eea; width: 300px; text-align: center;">
+                <br><br>
+                <button id="confirm-name" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 25px; padding: 15px 30px; font-size: 1.1em; cursor: pointer;">Confirmar Nome</button>
+            </div>
+        </div>
+        
+        <!-- Seleção de Idade -->
+        <div id="age-selection" class="age-section hidden">
+            <h1>🎮 Olá, <span id="player-name"></span>! 🎮</h1>
+            <p class="subtitle">Agora me diga qual é a sua idade:</p>
+            
+            <div class="age-options">
+                <button class="age-btn" data-age="7-10">
+                    <div class="age-icon">🧒</div>
+                    <div class="age-title">7 a 10 anos</div>
+                    <div class="age-description">Alfabeto e Números</div>
+                </button>
+                
+                <button class="age-btn" data-age="10-14">
+                    <div class="age-icon">👦</div>
+                    <div class="age-title">10 a 14 anos</div>
+                    <div class="age-description">Gramática e Cálculos</div>
+                </button>
+                
+                <button class="age-btn" data-age="15-18">
+                    <div class="age-icon">🎓</div>
+                    <div class="age-title">15 a 18 anos</div>
+                    <div class="age-description">Ensino Médio Completo</div>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Jogos 7-10 anos -->
+        <div id="games-7-10" class="games-section hidden">
+            <h1>🎮 EduGames Brasil - 7 a 10 anos 🎮</h1>
+            <button class="back-btn" onclick="showAgeSelection()">⬅️ Voltar</button>
+            
+            <div class="games-grid">
+                <a href="jogo-alfabeto/index.html" class="game-card">
+                    <div class="game-icon">🔤</div>
+                    <div class="game-title">Jogo do Alfabeto</div>
+                    <div class="game-description">Aprenda as letras do alfabeto com sons e imagens divertidas!</div>
+                </a>
+                
+                <a href="jogo-numeros/index.html" class="game-card">
+                    <div class="game-icon">🔢</div>
+                    <div class="game-title">Jogo de Números</div>
+                    <div class="game-description">Descubra os números e pratique matemática de forma divertida!</div>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Jogos 10-14 anos -->
+        <div id="games-10-14" class="games-section hidden">
+            <h1>📚 EduGames Brasil - 10 a 14 anos 📚</h1>
+            <button class="back-btn" onclick="showAgeSelection()">⬅️ Voltar</button>
+            
+            <div class="games-grid">
+                <a href="jogo-gramatica/index.html" class="game-card">
+                    <div class="game-icon">📖</div>
+                    <div class="game-title">Gramática Básica</div>
+                    <div class="game-description">Morfologia, sintaxe e análise de orações!</div>
+                </a>
+                
+                <a href="jogo-calculos/index.html" class="game-card">
+                    <div class="game-icon">🧮</div>
+                    <div class="game-title">Cálculos Avançados</div>
+                    <div class="game-description">Matemática com sistema de notas!</div>
+                </a>
+                
+                <a href="jogo-numeros-expandido.html" class="game-card">
+                    <div class="game-icon">🔢</div>
+                    <div class="game-title">Matemática Completa</div>
+                    <div class="game-description">De 7 a 18 anos - Todos os níveis!</div>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Jogos 15-18 anos -->
+        <div id="games-15-18" class="games-section hidden">
+            <h1>🎓 EduGames Brasil - 15 a 18 anos 🎓</h1>
+            <button class="back-btn" onclick="showAgeSelection()">⬅️ Voltar</button>
+            
+            <div class="games-grid">
+                <a href="jogo-portugues-avancado.html" class="game-card">
+                    <div class="game-icon">📚</div>
+                    <div class="game-title">Português Avançado</div>
+                    <div class="game-description">Literatura, redação e interpretação de textos!</div>
+                </a>
+                
+                <a href="jogo-numeros-expandido.html" class="game-card">
+                    <div class="game-icon">🧮</div>
+                    <div class="game-title">Matemática Ensino Médio</div>
+                    <div class="game-description">Funções, fórmulas e matemática financeira!</div>
+                </a>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>✨ EduGames Brasil - Jogos educativos com recursos visuais e audiovisuais ✨</p>
+            <p>Plataforma desenvolvida especialmente para o aprendizado brasileiro</p>
+            <p><strong>Feito por Prof. Borges</strong></p>
+        </div>
+    </div>
+
+    <script>
+        function showAgeSelection() {
+            document.getElementById('age-selection').classList.remove('hidden');
+            document.getElementById('games-7-10').classList.add('hidden');
+            document.getElementById('games-10-14').classList.add('hidden');
+            document.getElementById('games-15-18').classList.add('hidden');
+        }
+        
+        function showGamesForAge(age) {
+            document.getElementById('age-selection').classList.add('hidden');
+            
+            if (age === '7-10') {
+                document.getElementById('games-7-10').classList.remove('hidden');
+                document.getElementById('games-10-14').classList.add('hidden');
+                document.getElementById('games-15-18').classList.add('hidden');
+                
+                if ('speechSynthesis' in window) {
+                    const utterance = new SpeechSynthesisUtterance();
+                    utterance.text = `Ótima escolha, ${playerName}! Vamos aprender o alfabeto e números de forma divertida!`;
+                    utterance.lang = 'pt-BR';
+                    utterance.rate = 0.9;
+                    utterance.pitch = 1.1;
+                    speechSynthesis.speak(utterance);
+                }
+            } else if (age === '10-14') {
+                document.getElementById('games-7-10').classList.add('hidden');
+                document.getElementById('games-10-14').classList.remove('hidden');
+                document.getElementById('games-15-18').classList.add('hidden');
+                
+                if ('speechSynthesis' in window) {
+                    const utterance = new SpeechSynthesisUtterance();
+                    utterance.text = `Perfeito, ${playerName}! Vamos estudar gramática e matemática avançada com sistema de notas!`;
+                    utterance.lang = 'pt-BR';
+                    utterance.rate = 0.9;
+                    utterance.pitch = 1.1;
+                    speechSynthesis.speak(utterance);
+                }
+            } else if (age === '15-18') {
+                document.getElementById('games-7-10').classList.add('hidden');
+                document.getElementById('games-10-14').classList.add('hidden');
+                document.getElementById('games-15-18').classList.remove('hidden');
+                
+                if ('speechSynthesis' in window) {
+                    const utterance = new SpeechSynthesisUtterance();
+                    utterance.text = `Excelente, ${playerName}! Aqui você encontra conteúdo completo de ensino médio com português avançado e matemática financeira!`;
+                    utterance.lang = 'pt-BR';
+                    utterance.rate = 0.9;
+                    utterance.pitch = 1.1;
+                    speechSynthesis.speak(utterance);
+                }
+            }
+        }
+        
+        let playerName = '';
+        
+        function confirmName() {
+            const nameInput = document.getElementById('student-name');
+            playerName = nameInput.value.trim();
+            
+            if (playerName === '') {
+                alert('Por favor, digite seu nome!');
+                return;
+            }
+            
+            // Salvar nome no localStorage para usar nos jogos
+            localStorage.setItem('studentName', playerName);
+            
+            document.getElementById('name-input').classList.add('hidden');
+            document.getElementById('age-selection').classList.remove('hidden');
+            document.getElementById('player-name').textContent = playerName;
+            
+            // Som personalizado com nome
+            if ('speechSynthesis' in window) {
+                setTimeout(() => {
+                    const utterance = new SpeechSynthesisUtterance();
+                    utterance.text = `Olá, ${playerName}! Agora me diga qual é a sua idade para começarmos a aprender juntos!`;
+                    utterance.lang = 'pt-BR';
+                    utterance.rate = 0.9;
+                    utterance.pitch = 1.1;
+                    speechSynthesis.speak(utterance);
+                }, 500);
+            }
+        }
+        
+        // Configurar eventos
+        document.addEventListener('DOMContentLoaded', () => {
+            // Som de boas-vindas inicial
+            if ('speechSynthesis' in window) {
+                setTimeout(() => {
+                    const utterance = new SpeechSynthesisUtterance();
+                    utterance.text = 'Bem-vindos ao EduGames Brasil! Primeiro, me digam qual é o nome de vocês!';
+                    utterance.lang = 'pt-BR';
+                    utterance.rate = 0.9;
+                    utterance.pitch = 1.1;
+                    speechSynthesis.speak(utterance);
+                }, 1000);
+            }
+            
+            // Evento do botão confirmar nome
+            document.getElementById('confirm-name').addEventListener('click', confirmName);
+            
+            // Enter no campo nome
+            document.getElementById('student-name').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    confirmName();
+                }
+            });
+            
+            // Eventos dos botões de idade
+            document.querySelectorAll('.age-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const age = btn.dataset.age;
+                    showGamesForAge(age);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
