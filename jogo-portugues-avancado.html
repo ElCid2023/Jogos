@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduGames Brasil - Português Avançado</title>
+    <link rel="stylesheet" href="style-portugues.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 EduGames Brasil - Português Avançado 📚</h1>
+            <p>Ensino Médio - 15 a 18 anos</p>
+            <div class="game-nav">
+                <button onclick="window.location.href='index.html#age-selection'" class="nav-btn">🏠 Início</button>
+                <button onclick="window.location.href='jogo-gramatica/index.html'" class="nav-btn">📖 Gramática Básica</button>
+            </div>
+        </header>
+
+        <div id="game-area">
+            <div class="game-modes">
+                <button id="subordinadas-mode" class="mode-btn active">🔗 Orações Subordinadas</button>
+                <button id="literatura-mode" class="mode-btn">📖 Literatura</button>
+                <button id="redacao-mode" class="mode-btn">✍️ Redação</button>
+                <button id="interpretacao-mode" class="mode-btn">🎭 Interpretação</button>
+                <button id="review-btn-portuguese" class="review-btn">📚 Revisão</button>
+            </div>
+
+            <!-- Orações Subordinadas -->
+            <div id="subordinadas-section" class="game-section">
+                <div class="challenge-area">
+                    <div class="text-display">
+                        <h3>Classifique a oração subordinada:</h3>
+                        <div id="sentence-text">"Espero que você venha à festa."</div>
+                        <div class="highlight-word">Oração destacada: <span id="highlighted-clause">"que você venha"</span></div>
+                    </div>
+                    
+                    <div class="options-grid" id="subordinadas-options">
+                        <!-- Opções geradas pelo JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Literatura -->
+            <div id="literatura-section" class="game-section hidden">
+                <div class="challenge-area">
+                    <div class="literature-display">
+                        <h3>Literatura Brasileira:</h3>
+                        <div id="literature-text">"Capitu, Capitu, Capitu... Os olhos de ressaca..."</div>
+                        <div class="author-info">Trecho de: <span id="work-info">Dom Casmurro</span></div>
+                        <div class="question" id="literature-question">A qual escola literária pertence esta obra?</div>
+                    </div>
+                    
+                    <div class="options-grid" id="literatura-options">
+                        <!-- Opções geradas pelo JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Redação -->
+            <div id="redacao-section" class="game-section hidden">
+                <div class="challenge-area">
+                    <div class="writing-display">
+                        <h3>Técnicas de Redação:</h3>
+                        <div id="writing-text">"O Brasil enfrenta sérios problemas ambientais. _____, é necessário implementar políticas sustentáveis."</div>
+                        <div class="question">Qual conectivo melhor completa o texto?</div>
+                    </div>
+                    
+                    <div class="options-grid" id="redacao-options">
+                        <!-- Opções geradas pelo JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interpretação -->
+            <div id="interpretacao-section" class="game-section hidden">
+                <div class="challenge-area">
+                    <div class="interpretation-display">
+                        <h3>Interpretação de Texto:</h3>
+                        <div id="interpretation-text">
+                            <p>"A ironia do destino fez com que o homem mais rico da cidade morresse de fome, cercado por suas riquezas que não podia comer."</p>
+                        </div>
+                        <div class="question" id="interpretation-question">Qual figura de linguagem predomina no texto?</div>
+                    </div>
+                    
+                    <div class="options-grid" id="interpretacao-options">
+                        <!-- Opções geradas pelo JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button id="check-answer" class="btn-primary">✅ Verificar</button>
+                <button id="next-challenge" class="btn-secondary">➡️ Próximo</button>
+                <button id="hint-btn" class="btn-secondary">💡 Dica</button>
+                <button id="finish-session" class="btn-warning">🏁 Finalizar Sessão</button>
+            </div>
+
+            <div class="stats-area">
+                <div class="stat">Acertos: <span id="correct-count">0</span></div>
+                <div class="stat">Total: <span id="total-count">0</span></div>
+                <div class="stat">Nota: <span id="current-grade">0.0</span></div>
+                <div class="stat">Tempo: <span id="session-time">00:00</span></div>
+            </div>
+            
+            <div class="problem-counter">
+                <span>Desafio: <span id="current-problem">1</span>/<span id="total-problems">25</span></span>
+            </div>
+        </div>
+
+        <!-- Relatório Final -->
+        <div id="report-section" class="hidden">
+            <div class="report-card">
+                <h2>📊 Relatório de Desempenho - Português Avançado</h2>
+                <div class="student-name">Aluno: <span id="report-name"></span></div>
+                <div class="final-grade">Nota Final: <span id="final-grade">0.0</span></div>
+                
+                <div class="performance-details">
+                    <div class="detail-row">
+                        <span>Orações Subordinadas:</span>
+                        <span id="subordinadas-performance">0/0</span>
+                        <span id="subordinadas-grade">0.0</span>
+                    </div>
+                    <div class="detail-row">
+                        <span>Literatura:</span>
+                        <span id="literatura-performance">0/0</span>
+                        <span id="literatura-grade">0.0</span>
+                    </div>
+                    <div class="detail-row">
+                        <span>Redação:</span>
+                        <span id="redacao-performance">0/0</span>
+                        <span id="redacao-grade">0.0</span>
+                    </div>
+                    <div class="detail-row">
+                        <span>Interpretação:</span>
+                        <span id="interpretacao-performance">0/0</span>
+                        <span id="interpretacao-grade">0.0</span>
+                    </div>
+                </div>
+                
+                <div class="time-info">
+                    <div>Tempo Total: <span id="total-time">00:00</span></div>
+                    <div>Data: <span id="session-date"></span></div>
+                </div>
+                
+                <div class="report-actions">
+                    <button id="send-google-forms" class="btn-primary">📊 Enviar para Professor</button>
+                    <button id="print-report" class="btn-secondary">🖨️ Imprimir Relatório</button>
+                    <button id="new-session" class="btn-secondary">🔄 Nova Sessão</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tela de Revisão -->
+        <div id="review-section" class="hidden">
+            <div class="review-header">
+                <h2>📚 Revisão Rápida - Português Avançado</h2>
+                <button id="back-to-game" class="btn-primary">⬅️ Voltar ao Jogo</button>
+            </div>
+            
+            <div id="review-content" class="review-content">
+                <!-- Conteúdo da revisão será inserido aqui -->
+            </div>
+            
+            <div style="text-align: center; margin-top: 20px; color: #718096; font-size: 0.9em;">
+                <strong>Feito por Prof. Borges</strong>
+            </div>
+        </div>
+    </div>
+
+    <script src="script-portugues-avancado.js"></script>
+</body>
+</html>
