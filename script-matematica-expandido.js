@@ -394,11 +394,6 @@ class ExpandedMathGame {
                 this.showReview('intermediate');
             }
             
-            if (e.target.id === 'review-btn-intermediate') {
-                document.getElementById('game-area').classList.add('hidden');
-                document.getElementById('review-section').classList.remove('hidden');
-            }
-            
             if (e.target.id === 'review-btn-advanced') {
                 this.showReview('advanced');
             }
