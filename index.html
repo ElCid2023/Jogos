@@ -167,7 +167,7 @@
         <!-- Solicitação de Nome -->
         <div id="name-input" class="age-section">
             <h1>🎮 EduGames Brasil 🎮</h1>
-            <p class="subtitle">Bem-vindos! Primeiro, me digam qual é o seu nome:</p>
+            <p class="subtitle">Bem-vindo! Primeiro, me diga qual é o seu nome:</p>
             
             <div style="text-align: center; margin: 30px 0;">
                 <input type="text" id="student-name" placeholder="Digite seu nome aqui" style="padding: 15px; font-size: 1.2em; border-radius: 10px; border: 2px solid #667eea; width: 300px; text-align: center;">
@@ -176,36 +176,22 @@
             </div>
         </div>
         
-        <!-- Seleção de Idade -->
-        <div id="age-selection" class="age-section hidden">
+        <!-- Solicitação de Idade -->
+        <div id="age-input" class="age-section hidden">
             <h1>🎮 Olá, <span id="player-name"></span>! 🎮</h1>
-            <p class="subtitle">Agora me diga qual é a sua idade:</p>
+            <p class="subtitle">Agora me diga quantos anos você tem:</p>
             
-            <div class="age-options">
-                <button class="age-btn" data-age="7-10">
-                    <div class="age-icon">🧒</div>
-                    <div class="age-title">7 a 10 anos</div>
-                    <div class="age-description">Alfabeto e Números</div>
-                </button>
-                
-                <button class="age-btn" data-age="10-14">
-                    <div class="age-icon">👦</div>
-                    <div class="age-title">10 a 14 anos</div>
-                    <div class="age-description">Gramática e Cálculos</div>
-                </button>
-                
-                <button class="age-btn" data-age="15-18">
-                    <div class="age-icon">🎓</div>
-                    <div class="age-title">15 a 18 anos</div>
-                    <div class="age-description">Ensino Médio Completo</div>
-                </button>
+            <div style="text-align: center; margin: 30px 0;">
+                <input type="number" id="student-age" placeholder="Digite sua idade" min="7" max="18" style="padding: 15px; font-size: 1.2em; border-radius: 10px; border: 2px solid #667eea; width: 200px; text-align: center;">
+                <br><br>
+                <button id="confirm-age" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 25px; padding: 15px 30px; font-size: 1.1em; cursor: pointer;">Confirmar Idade</button>
             </div>
         </div>
         
         <!-- Jogos 7-10 anos -->
         <div id="games-7-10" class="games-section hidden">
-            <h1>🎮 EduGames Brasil - 7 a 10 anos 🎮</h1>
-            <button class="back-btn" onclick="showAgeSelection()">⬅️ Voltar</button>
+            <h1>🎮 EduGames Brasil - <span id="player-name-7-10"></span> 🎮</h1>
+            <button onclick="clearSession(); location.reload();" class="back-btn" style="margin-bottom: 20px;">Sair</button>
             
             <div class="games-grid">
                 <a href="jogo-alfabeto/index.html" class="game-card">
@@ -224,8 +210,8 @@
         
         <!-- Jogos 10-14 anos -->
         <div id="games-10-14" class="games-section hidden">
-            <h1>📚 EduGames Brasil - 10 a 14 anos 📚</h1>
-            <button class="back-btn" onclick="showAgeSelection()">⬅️ Voltar</button>
+            <h1>📚 EduGames Brasil - <span id="player-name-10-14"></span> 📚</h1>
+            <button onclick="clearSession(); location.reload();" class="back-btn" style="margin-bottom: 20px;">Sair</button>
             
             <div class="games-grid">
                 <a href="jogo-gramatica/index.html" class="game-card">
@@ -234,24 +220,24 @@
                     <div class="game-description">Morfologia, sintaxe e análise de orações!</div>
                 </a>
                 
+                <a href="jogo-numeros-expandido.html" class="game-card">
+                    <div class="game-icon">🔢</div>
+                    <div class="game-title">Matemática Intermediária</div>
+                    <div class="game-description">Frações, equações e geometria!</div>
+                </a>
+                
                 <a href="jogo-calculos/index.html" class="game-card">
                     <div class="game-icon">🧮</div>
                     <div class="game-title">Cálculos Avançados</div>
                     <div class="game-description">Matemática com sistema de notas!</div>
-                </a>
-                
-                <a href="jogo-numeros-expandido.html" class="game-card">
-                    <div class="game-icon">🔢</div>
-                    <div class="game-title">Matemática Completa</div>
-                    <div class="game-description">De 7 a 18 anos - Todos os níveis!</div>
                 </a>
             </div>
         </div>
         
         <!-- Jogos 15-18 anos -->
         <div id="games-15-18" class="games-section hidden">
-            <h1>🎓 EduGames Brasil - 15 a 18 anos 🎓</h1>
-            <button class="back-btn" onclick="showAgeSelection()">⬅️ Voltar</button>
+            <h1>🎓 EduGames Brasil - <span id="player-name-15-18"></span> 🎓</h1>
+            <button onclick="clearSession(); location.reload();" class="back-btn" style="margin-bottom: 20px;">Sair</button>
             
             <div class="games-grid">
                 <a href="jogo-portugues-avancado.html" class="game-card">
@@ -272,170 +258,238 @@
             <p>✨ EduGames Brasil - Jogos educativos com recursos visuais e audiovisuais ✨</p>
             <p>Plataforma desenvolvida especialmente para o aprendizado brasileiro</p>
             <p><strong>Feito por Prof. Borges</strong></p>
+            <button id="clear-session" style="background: #ff6b6b; color: white; border: none; border-radius: 15px; padding: 10px 20px; margin-top: 10px; cursor: pointer; font-size: 0.9em;">Limpar Sessão</button>
         </div>
     </div>
 
     <script>
-        function showAgeSelection() {
-            document.getElementById('age-selection').classList.remove('hidden');
-            document.getElementById('games-7-10').classList.add('hidden');
-            document.getElementById('games-10-14').classList.add('hidden');
-            document.getElementById('games-15-18').classList.add('hidden');
+        // Funções de segurança simplificadas
+        function validateName(name) {
+            if (!name || typeof name !== 'string') return null;
+            const sanitized = name.replace(/[<>"'&]/g, '').trim().substring(0, 50);
+            if (sanitized.length < 2) return null;
+            if (!/^[a-zA-ZÀ-ÿ\s]+$/.test(sanitized)) return null;
+            return sanitized;
         }
         
-        function showGamesForAge(age) {
-            // Parar qualquer áudio anterior
-            speechSynthesis.cancel();
+        function validateAge(age) {
+            const numAge = parseInt(age);
+            if (isNaN(numAge) || numAge < 7 || numAge > 18) return null;
+            return numAge;
+        }
+        
+        function saveSession(name, age) {
+            const sessionData = {
+                name: validateName(name),
+                age: validateAge(age),
+                timestamp: Date.now()
+            };
             
-            document.getElementById('age-selection').classList.add('hidden');
+            if (!sessionData.name || !sessionData.age) return null;
             
-            if (age === '7-10') {
-                document.getElementById('games-7-10').classList.remove('hidden');
-                document.getElementById('games-10-14').classList.add('hidden');
-                document.getElementById('games-15-18').classList.add('hidden');
+            localStorage.setItem('edugames_session', JSON.stringify(sessionData));
+            return sessionData;
+        }
+        
+        function loadSession() {
+            try {
+                const sessionStr = localStorage.getItem('edugames_session');
+                if (!sessionStr) return null;
                 
-                if ('speechSynthesis' in window) {
-                    setTimeout(() => {
-                        const utterance = new SpeechSynthesisUtterance();
-                        utterance.text = `Ótima escolha, ${playerName}! Vamos aprender o alfabeto e números de forma divertida!`;
-                        utterance.lang = 'pt-BR';
-                        utterance.rate = 0.9;
-                        utterance.pitch = 1.1;
-                        speechSynthesis.speak(utterance);
-                    }, 300);
-                }
-            } else if (age === '10-14') {
-                document.getElementById('games-7-10').classList.add('hidden');
-                document.getElementById('games-10-14').classList.remove('hidden');
-                document.getElementById('games-15-18').classList.add('hidden');
+                const session = JSON.parse(sessionStr);
                 
-                if ('speechSynthesis' in window) {
-                    setTimeout(() => {
-                        const utterance = new SpeechSynthesisUtterance();
-                        utterance.text = `Perfeito, ${playerName}! Vamos estudar gramática e matemática avançada com sistema de notas!`;
-                        utterance.lang = 'pt-BR';
-                        utterance.rate = 0.9;
-                        utterance.pitch = 1.1;
-                        speechSynthesis.speak(utterance);
-                    }, 300);
+                if (Date.now() - session.timestamp > 24 * 60 * 60 * 1000) {
+                    clearSession();
+                    return null;
                 }
-            } else if (age === '15-18') {
-                document.getElementById('games-7-10').classList.add('hidden');
-                document.getElementById('games-10-14').classList.add('hidden');
-                document.getElementById('games-15-18').classList.remove('hidden');
                 
-                if ('speechSynthesis' in window) {
-                    setTimeout(() => {
-                        const utterance = new SpeechSynthesisUtterance();
-                        utterance.text = `Excelente, ${playerName}! Aqui você encontra conteúdo completo de ensino médio com português avançado e matemática financeira!`;
-                        utterance.lang = 'pt-BR';
-                        utterance.rate = 0.9;
-                        utterance.pitch = 1.1;
-                        speechSynthesis.speak(utterance);
-                    }, 300);
-                }
+                return session;
+            } catch (error) {
+                clearSession();
+                return null;
             }
+        }
+        
+        function clearSession() {
+            localStorage.removeItem('edugames_session');
+            localStorage.removeItem('studentName');
+            localStorage.removeItem('studentAge');
         }
         
         let playerName = '';
+        let playerAge = 0;
         
         function confirmName() {
-            const nameInput = document.getElementById('student-name');
-            playerName = nameInput.value.trim();
-            
-            if (playerName === '') {
-                alert('Por favor, digite seu nome!');
-                return;
-            }
-            
-            // Parar qualquer áudio anterior
-            speechSynthesis.cancel();
-            
-            // Salvar nome no localStorage para usar nos jogos
-            localStorage.setItem('studentName', playerName);
-            
-            document.getElementById('name-input').classList.add('hidden');
-            document.getElementById('age-selection').classList.remove('hidden');
-            document.getElementById('player-name').textContent = playerName;
-            
-            // Som personalizado com nome
-            if ('speechSynthesis' in window) {
-                setTimeout(() => {
-                    const utterance = new SpeechSynthesisUtterance();
-                    utterance.text = `Olá, ${playerName}! Agora me diga qual é a sua idade para começarmos a aprender juntos!`;
-                    utterance.lang = 'pt-BR';
-                    utterance.rate = 0.9;
-                    utterance.pitch = 1.1;
-                    speechSynthesis.speak(utterance);
-                }, 300);
+            try {
+                const nameInput = document.getElementById('student-name');
+                const validatedName = validateName(nameInput.value);
+                
+                if (!validatedName) {
+                    alert('Por favor, digite um nome válido (apenas letras, mínimo 2 caracteres)!');
+                    return;
+                }
+                
+                playerName = validatedName;
+                speechSynthesis.cancel();
+                
+                document.getElementById('name-input').classList.add('hidden');
+                document.getElementById('age-input').classList.remove('hidden');
+                document.getElementById('player-name').textContent = playerName;
+                
+                if ('speechSynthesis' in window) {
+                    setTimeout(() => {
+                        const utterance = new SpeechSynthesisUtterance();
+                        utterance.text = `Olá, ${playerName}! Agora me diga quantos anos você tem!`;
+                        utterance.lang = 'pt-BR';
+                        utterance.rate = 0.9;
+                        utterance.pitch = 1.1;
+                        speechSynthesis.speak(utterance);
+                    }, 300);
+                }
+            } catch (error) {
+                console.error('Erro ao confirmar nome:', error);
+                alert('Erro ao processar nome. Tente novamente.');
             }
         }
         
-        // Configurar eventos
-        document.addEventListener('DOMContentLoaded', () => {
-            // Verificar se veio de um jogo (com âncora)
-            if (window.location.hash === '#age-selection') {
-                // Vem de um jogo, pular nome e ir direto para seleção de idade
-                const savedName = localStorage.getItem('studentName');
-                if (savedName) {
-                    playerName = savedName;
-                    document.getElementById('name-input').classList.add('hidden');
-                    document.getElementById('age-selection').classList.remove('hidden');
-                    document.getElementById('player-name').textContent = playerName;
+        function confirmAge() {
+            try {
+                const ageInput = document.getElementById('student-age');
+                const validatedAge = validateAge(ageInput.value);
+                
+                if (!validatedAge) {
+                    alert('Por favor, digite uma idade válida entre 7 e 18 anos!');
+                    return;
+                }
+                
+                playerAge = validatedAge;
+                
+                const sessionData = saveSession(playerName, playerAge);
+                if (!sessionData) {
+                    alert('Erro ao salvar dados. Tente novamente.');
+                    return;
+                }
+                
+                speechSynthesis.cancel();
+                document.getElementById('age-input').classList.add('hidden');
+                
+                showGamesForAge(playerAge, playerName);
+            } catch (error) {
+                console.error('Erro ao confirmar idade:', error);
+                alert('Erro ao processar idade. Tente novamente.');
+            }
+        }
+        
+        function showGamesForAge(age, name) {
+            try {
+                
+                if (age >= 7 && age <= 10) {
+                    document.getElementById('games-7-10').classList.remove('hidden');
+                    document.getElementById('player-name-7-10').textContent = name;
                     
-                    // Som de retorno
                     if ('speechSynthesis' in window) {
                         setTimeout(() => {
                             const utterance = new SpeechSynthesisUtterance();
-                            utterance.text = `Olá novamente, ${playerName}! Escolha outro jogo para continuar aprendendo!`;
+                            utterance.text = `Perfeito, ${name}! Vamos aprender o alfabeto e números de forma divertida!`;
                             utterance.lang = 'pt-BR';
                             utterance.rate = 0.9;
                             utterance.pitch = 1.1;
                             speechSynthesis.speak(utterance);
-                        }, 500);
+                        }, 300);
                     }
+                } else if (age >= 10 && age <= 14) {
+                    document.getElementById('games-10-14').classList.remove('hidden');
+                    document.getElementById('player-name-10-14').textContent = name;
                     
-                    // Configurar eventos dos botões de idade
-                    document.querySelectorAll('.age-btn').forEach(btn => {
-                        btn.addEventListener('click', () => {
-                            const age = btn.dataset.age;
-                            showGamesForAge(age);
-                        });
-                    });
+                    if ('speechSynthesis' in window) {
+                        setTimeout(() => {
+                            const utterance = new SpeechSynthesisUtterance();
+                            utterance.text = `Excelente, ${name}! Vamos estudar gramática e matemática avançada!`;
+                            utterance.lang = 'pt-BR';
+                            utterance.rate = 0.9;
+                            utterance.pitch = 1.1;
+                            speechSynthesis.speak(utterance);
+                        }, 300);
+                    }
+                } else if (age >= 15 && age <= 18) {
+                    document.getElementById('games-15-18').classList.remove('hidden');
+                    document.getElementById('player-name-15-18').textContent = name;
                     
+                    if ('speechSynthesis' in window) {
+                        setTimeout(() => {
+                            const utterance = new SpeechSynthesisUtterance();
+                            utterance.text = `Ótimo, ${name}! Aqui você encontra conteúdo completo de ensino médio!`;
+                            utterance.lang = 'pt-BR';
+                            utterance.rate = 0.9;
+                            utterance.pitch = 1.1;
+                            speechSynthesis.speak(utterance);
+                        }, 300);
+                    }
+                }
+            } catch (error) {
+                console.error('Erro ao mostrar jogos:', error);
+                alert('Erro ao carregar jogos. Recarregue a página.');
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            try {
+                // Verificar se há sessão válida
+                const session = loadSession();
+                
+                if (session && session.name && session.age) {
+                    // Sessão válida - mostrar jogos
+                    playerName = session.name;
+                    playerAge = session.age;
+                    
+                    document.getElementById('name-input').classList.add('hidden');
+                    document.getElementById('age-input').classList.add('hidden');
+                    
+                    showGamesForAge(playerAge, playerName);
                     return;
                 }
-            }
-            
-            // Som de boas-vindas inicial (primeira vez)
-            if ('speechSynthesis' in window) {
-                setTimeout(() => {
-                    const utterance = new SpeechSynthesisUtterance();
-                    utterance.text = 'Bem-vindos ao EduGames Brasil! Primeiro, me digam qual é o nome de vocês!';
-                    utterance.lang = 'pt-BR';
-                    utterance.rate = 0.9;
-                    utterance.pitch = 1.1;
-                    speechSynthesis.speak(utterance);
-                }, 500);
-            }
-            
-            // Evento do botão confirmar nome
-            document.getElementById('confirm-name').addEventListener('click', confirmName);
-            
-            // Enter no campo nome
-            document.getElementById('student-name').addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    confirmName();
+                
+                // Áudio após primeira interação (Opera)
+                let hasPlayedWelcome = false;
+                
+                function playWelcomeAudio() {
+                    if (!hasPlayedWelcome && 'speechSynthesis' in window) {
+                        hasPlayedWelcome = true;
+                        const utterance = new SpeechSynthesisUtterance();
+                        utterance.text = 'Bem-vindo ao EduGames Brasil! Por favor, digite o seu nome no campo abaixo e clique em confirmar nome.';
+                        utterance.lang = 'pt-BR';
+                        utterance.rate = 0.9;
+                        utterance.pitch = 1.1;
+                        speechSynthesis.speak(utterance);
+                    }
                 }
-            });
-            
-            // Eventos dos botões de idade
-            document.querySelectorAll('.age-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const age = btn.dataset.age;
-                    showGamesForAge(age);
+                
+                // Tocar áudio na primeira interação
+                document.addEventListener('click', playWelcomeAudio, { once: true });
+                document.getElementById('student-name').addEventListener('focus', playWelcomeAudio, { once: true });
+                
+                document.getElementById('confirm-name').addEventListener('click', confirmName);
+                document.getElementById('confirm-age').addEventListener('click', confirmAge);
+                
+                document.getElementById('student-name').addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') confirmName();
                 });
-            });
+                
+                document.getElementById('student-age').addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') confirmAge();
+                });
+                
+                document.getElementById('clear-session').addEventListener('click', () => {
+                    if (confirm('Tem certeza que deseja limpar a sessão? Você precisará inserir nome e idade novamente.')) {
+                        clearSession();
+                        location.reload();
+                    }
+                });
+                
+
+            } catch (error) {
+                console.error('Erro na inicialização:', error);
+            }
         });
     </script>
 </body>

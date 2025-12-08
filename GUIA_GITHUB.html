@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia GitHub - EduGames Brasil</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; background: #f5f5f5; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; background: white; box-shadow: 0 0 20px rgba(0,0,0,0.1); }
+        header { background: linear-gradient(135deg, #24292e 0%, #0366d6 100%); color: white; padding: 40px; text-align: center; border-radius: 10px; margin-bottom: 30px; }
+        h1 { font-size: 2.5em; margin-bottom: 10px; }
+        h2 { color: #0366d6; margin: 30px 0 15px; padding-bottom: 10px; border-bottom: 3px solid #0366d6; }
+        h3 { color: #24292e; margin: 20px 0 10px; }
+        .step { background: #f6f8fa; padding: 20px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #0366d6; }
+        .step-number { display: inline-block; background: #0366d6; color: white; width: 40px; height: 40px; line-height: 40px; text-align: center; border-radius: 50%; font-weight: bold; margin-right: 10px; }
+        .code-block { background: #24292e; color: #f8f8f2; padding: 20px; border-radius: 8px; overflow-x: auto; margin: 15px 0; font-family: 'Courier New', monospace; }
+        .success { background: #d4edda; border-left: 4px solid #28a745; padding: 15px; margin: 15px 0; border-radius: 4px; }
+        .warning { background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin: 15px 0; border-radius: 4px; }
+        .info { background: #d1ecf1; border-left: 4px solid #17a2b8; padding: 15px; margin: 15px 0; border-radius: 4px; }
+        .tip { background: #e7f3ff; border-left: 4px solid #0366d6; padding: 15px; margin: 15px 0; border-radius: 4px; }
+        ul, ol { margin: 15px 0 15px 30px; }
+        li { margin: 8px 0; }
+        .btn { display: inline-block; padding: 12px 24px; background: #0366d6; color: white; text-decoration: none; border-radius: 6px; margin: 10px 5px; transition: all 0.3s; }
+        .btn:hover { background: #0256c7; transform: translateY(-2px); }
+        .btn-success { background: #28a745; }
+        .btn-success:hover { background: #218838; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 12px; text-align: left; border: 1px solid #ddd; }
+        th { background: #0366d6; color: white; }
+        tr:nth-child(even) { background: #f6f8fa; }
+        .highlight { background: #fff3cd; padding: 2px 6px; border-radius: 3px; }
+        .command { background: #24292e; color: #7ee787; padding: 2px 6px; border-radius: 3px; font-family: monospace; }
+        .toc { background: #f6f8fa; padding: 20px; border-radius: 8px; margin: 20px 0; }
+        .toc a { color: #0366d6; text-decoration: none; display: block; padding: 5px 0; }
+        .toc a:hover { text-decoration: underline; }
+        @media print { body { background: white; } .container { box-shadow: none; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 Como Subir o EduGames Brasil no GitHub</h1>
+            <p>Guia Completo Passo a Passo</p>
+            <p style="margin-top: 10px;">Hospede seu jogo GRÁTIS com GitHub Pages!</p>
+        </header>
+
+        <div class="toc">
+            <h2>📑 Índice Rápido</h2>
+            <a href="#pre-requisitos">1. Pré-requisitos</a>
+            <a href="#passo1">2. Criar Repositório no GitHub</a>
+            <a href="#passo2">3. Preparar Projeto Localmente</a>
+            <a href="#passo3">4. Criar .gitignore</a>
+            <a href="#passo4">5. Adicionar Arquivos ao Git</a>
+            <a href="#passo5">6. Conectar ao GitHub</a>
+            <a href="#passo6">7. Ativar GitHub Pages</a>
+            <a href="#comandos">8. Comandos Git Úteis</a>
+            <a href="#dicas">9. Dicas e Problemas Comuns</a>
+        </div>
+
+        <section id="pre-requisitos">
+            <h2>📋 Pré-requisitos</h2>
+            
+            <div class="step">
+                <h3>1️⃣ Criar Conta no GitHub</h3>
+                <ol>
+                    <li>Acesse: <a href="https://github.com" target="_blank">https://github.com</a></li>
+                    <li>Clique em <strong>"Sign up"</strong></li>
+                    <li>Preencha: email, senha, username</li>
+                    <li>Verifique seu email</li>
+                    <li>Pronto! Conta criada ✅</li>
+                </ol>
+            </div>
+
+            <div class="step">
+                <h3>2️⃣ Instalar Git no Windows</h3>
+                <ol>
+                    <li>Baixe: <a href="https://git-scm.com/download/win" target="_blank">https://git-scm.com/download/win</a></li>
+                    <li>Execute o instalador <span class="command">Git-2.x.x-64-bit.exe</span></li>
+                    <li>Use as opções padrão (Next, Next, Next...)</li>
+                    <li>Aguarde a instalação</li>
+                    <li>Pronto! Git instalado ✅</li>
+                </ol>
+                
+                <div class="tip">
+                    <strong>💡 Dica:</strong> Para verificar se instalou corretamente, abra o Prompt de Comando e digite:
+                    <div class="code-block">git --version</div>
+                    Deve aparecer algo como: <span class="command">git version 2.43.0</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="passo1">
+            <h2>PASSO 1: Criar Repositório no GitHub</h2>
+            
+            <div class="step">
+                <span class="step-number">1</span>
+                <strong>Faça login no GitHub</strong>
+            </div>
+
+            <div class="step">
+                <span class="step-number">2</span>
+                <strong>Clique no botão "+" no canto superior direito</strong>
+            </div>
+
+            <div class="step">
+                <span class="step-number">3</span>
+                <strong>Selecione "New repository"</strong>
+            </div>
+
+            <div class="step">
+                <span class="step-number">4</span>
+                <strong>Preencha os dados:</strong>
+                <ul>
+                    <li><strong>Repository name:</strong> <span class="highlight">edugames-brasil</span></li>
+                    <li><strong>Description:</strong> "Plataforma de jogos educativos interativos para estudantes brasileiros"</li>
+                    <li>Marque: <strong>✅ Public</strong> (para usar GitHub Pages grátis)</li>
+                    <li>Marque: <strong>✅ Add a README file</strong></li>
+                    <li><strong>NÃO</strong> marque Add .gitignore (vamos criar manualmente)</li>
+                </ul>
+            </div>
+
+            <div class="step">
+                <span class="step-number">5</span>
+                <strong>Clique em "Create repository"</strong>
+            </div>
+
+            <div class="success">
+                <strong>✅ Repositório criado!</strong> Agora você tem um repositório vazio no GitHub.
+            </div>
+        </section>
+
+        <section id="passo2">
+            <h2>PASSO 2: Preparar o Projeto Localmente</h2>
+
+            <div class="step">
+                <span class="step-number">1</span>
+                <strong>Abra o Git Bash ou Prompt de Comando</strong>
+                <p>Pressione <span class="command">Windows + R</span>, digite <span class="command">cmd</span> e pressione Enter</p>
+            </div>
+
+            <div class="step">
+                <span class="step-number">2</span>
+                <strong>Navegue até a pasta do projeto:</strong>
+                <div class="code-block">cd "C:\Users\Professor\Documents\criacoes-em-ia\Edugames Brasil"</div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">3</span>
+                <strong>Inicialize o Git:</strong>
+                <div class="code-block">git init</div>
+                <p>Você verá: <span class="command">Initialized empty Git repository...</span></p>
+            </div>
+
+            <div class="step">
+                <span class="step-number">4</span>
+                <strong>Configure seu nome e email (primeira vez apenas):</strong>
+                <div class="code-block">git config --global user.name "Seu Nome"
+git config --global user.email "seu-email@exemplo.com"</div>
+                <div class="warning">
+                    <strong>⚠️ Importante:</strong> Use o mesmo email da sua conta do GitHub!
+                </div>
+            </div>
+        </section>
+
+        <section id="passo3">
+            <h2>PASSO 3: Criar arquivo .gitignore</h2>
+
+            <div class="info">
+                <strong>ℹ️ O que é .gitignore?</strong> É um arquivo que diz ao Git quais arquivos NÃO devem ser enviados ao GitHub (como arquivos temporários, logs, etc.)
+            </div>
+
+            <div class="step">
+                <strong>O arquivo .gitignore já foi criado automaticamente!</strong>
+                <p>Localização: <span class="command">C:\Users\Professor\Documents\criacoes-em-ia\Edugames Brasil\.gitignore</span></p>
+                <p>Conteúdo:</p>
+                <div class="code-block"># Arquivos do sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Arquivos temporários
+*.tmp
+*.bak
+*.swp
+*~
+
+# Logs
+*.log
+
+# Pasta de distribuição
+dist/
+EduGames-Executavel/</div>
+            </div>
+        </section>
+
+        <section id="passo4">
+            <h2>PASSO 4: Adicionar Arquivos ao Git</h2>
+
+            <div class="step">
+                <span class="step-number">1</span>
+                <strong>Adicione todos os arquivos:</strong>
+                <div class="code-block">git add .</div>
+                <p>O ponto <span class="command">.</span> significa "todos os arquivos"</p>
+            </div>
+
+            <div class="step">
+                <span class="step-number">2</span>
+                <strong>Faça o primeiro commit:</strong>
+                <div class="code-block">git commit -m "Primeiro commit: EduGames Brasil completo"</div>
+                <p>Você verá uma lista de arquivos adicionados</p>
+            </div>
+
+            <div class="success">
+                <strong>✅ Arquivos preparados!</strong> Agora estão prontos para serem enviados ao GitHub.
+            </div>
+        </section>
+
+        <section id="passo5">
+            <h2>PASSO 5: Conectar ao GitHub e Enviar</h2>
+
+            <div class="step">
+                <span class="step-number">1</span>
+                <strong>Copie a URL do seu repositório no GitHub</strong>
+                <p>No GitHub, clique no botão verde <strong>"Code"</strong> e copie a URL HTTPS</p>
+                <p>Exemplo: <span class="command">https://github.com/seu-usuario/edugames-brasil.git</span></p>
+            </div>
+
+            <div class="step">
+                <span class="step-number">2</span>
+                <strong>Adicione o repositório remoto:</strong>
+                <div class="code-block">git remote add origin https://github.com/seu-usuario/edugames-brasil.git</div>
+                <div class="warning">
+                    <strong>⚠️ Substitua:</strong> <span class="command">seu-usuario</span> pelo seu username do GitHub!
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">3</span>
+                <strong>Renomeie a branch para main:</strong>
+                <div class="code-block">git branch -M main</div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">4</span>
+                <strong>Envie os arquivos para o GitHub:</strong>
+                <div class="code-block">git push -u origin main</div>
+                <p>Digite seu usuário e senha quando solicitado</p>
+            </div>
+
+            <div class="warning">
+                <h3>⚠️ Problema com Senha?</h3>
+                <p>O GitHub não aceita mais senha comum. Você precisa criar um <strong>Personal Access Token</strong>:</p>
+                <ol>
+                    <li>No GitHub: Settings → Developer settings → Personal access tokens → Tokens (classic)</li>
+                    <li>Clique em "Generate new token (classic)"</li>
+                    <li>Dê um nome: "EduGames Brasil"</li>
+                    <li>Marque: <strong>repo</strong> (todas as opções)</li>
+                    <li>Clique em "Generate token"</li>
+                    <li><strong>COPIE O TOKEN</strong> (você não verá novamente!)</li>
+                    <li>Use o token como senha no git push</li>
+                </ol>
+            </div>
+
+            <div class="success">
+                <strong>🎉 Projeto enviado para o GitHub!</strong> Acesse seu repositório e veja todos os arquivos lá!
+            </div>
+        </section>
+
+        <section id="passo6">
+            <h2>PASSO 6: Ativar GitHub Pages (Hospedar GRÁTIS!)</h2>
+
+            <div class="step">
+                <span class="step-number">1</span>
+                <strong>No seu repositório no GitHub, clique em "Settings"</strong>
+            </div>
+
+            <div class="step">
+                <span class="step-number">2</span>
+                <strong>No menu lateral esquerdo, clique em "Pages"</strong>
+            </div>
+
+            <div class="step">
+                <span class="step-number">3</span>
+                <strong>Em "Source", configure:</strong>
+                <ul>
+                    <li><strong>Branch:</strong> main</li>
+                    <li><strong>Folder:</strong> / (root)</li>
+                </ul>
+            </div>
+
+            <div class="step">
+                <span class="step-number">4</span>
+                <strong>Clique em "Save"</strong>
+            </div>
+
+            <div class="step">
+                <span class="step-number">5</span>
+                <strong>Aguarde 2-5 minutos</strong>
+                <p>O GitHub está processando e publicando seu site...</p>
+            </div>
+
+            <div class="step">
+                <span class="step-number">6</span>
+                <strong>Seu site estará disponível em:</strong>
+                <div class="code-block">https://seu-usuario.github.io/edugames-brasil/</div>
+            </div>
+
+            <div class="success">
+                <h3>🎉 PARABÉNS! Seu jogo está ONLINE!</h3>
+                <p>Agora qualquer pessoa no mundo pode acessar seu jogo pela URL acima!</p>
+                <a href="#" class="btn btn-success">🎮 Testar Jogo Online</a>
+            </div>
+        </section>
+
+        <section id="comandos">
+            <h2>📝 Comandos Git Úteis</h2>
+
+            <h3>Atualizar o projeto depois de fazer mudanças:</h3>
+            <div class="code-block"># 1. Ver o que mudou
+git status
+
+# 2. Adicionar mudanças
+git add .
+
+# 3. Fazer commit
+git commit -m "Descrição das mudanças"
+
+# 4. Enviar para GitHub
+git push</div>
+
+            <h3>Outros comandos úteis:</h3>
+            <table>
+                <tr>
+                    <th>Comando</th>
+                    <th>Descrição</th>
+                </tr>
+                <tr>
+                    <td><span class="command">git status</span></td>
+                    <td>Ver arquivos modificados</td>
+                </tr>
+                <tr>
+                    <td><span class="command">git log</span></td>
+                    <td>Ver histórico de commits</td>
+                </tr>
+                <tr>
+                    <td><span class="command">git pull</span></td>
+                    <td>Baixar mudanças do GitHub</td>
+                </tr>
+                <tr>
+                    <td><span class="command">git clone URL</span></td>
+                    <td>Clonar um repositório</td>
+                </tr>
+                <tr>
+                    <td><span class="command">git remote -v</span></td>
+                    <td>Ver repositórios remotos</td>
+                </tr>
+            </table>
+        </section>
+
+        <section id="dicas">
+            <h2>💡 Dicas e Problemas Comuns</h2>
+
+            <div class="tip">
+                <h3>✅ Vantagens do GitHub Pages:</h3>
+                <ul>
+                    <li>✅ <strong>100% Grátis</strong> para projetos públicos</li>
+                    <li>✅ <strong>Rápido</strong> - CDN global</li>
+                    <li>✅ <strong>Fácil</strong> - Atualiza automaticamente</li>
+                    <li>✅ <strong>HTTPS</strong> - Seguro por padrão</li>
+                    <li>✅ <strong>Sem limite</strong> de visitantes</li>
+                </ul>
+            </div>
+
+            <div class="warning">
+                <h3>⚠️ Limitações:</h3>
+                <ul>
+                    <li>Apenas sites estáticos (HTML/CSS/JS)</li>
+                    <li>Limite de 1GB de espaço</li>
+                    <li>Limite de 100GB de banda por mês</li>
+                    <li>Sem backend/banco de dados</li>
+                </ul>
+            </div>
+
+            <div class="info">
+                <h3>🔧 Problemas Comuns:</h3>
+                
+                <h4>1. Erro: "Permission denied"</h4>
+                <p><strong>Solução:</strong> Use Personal Access Token ao invés de senha</p>
+
+                <h4>2. Erro: "Repository not found"</h4>
+                <p><strong>Solução:</strong> Verifique se a URL está correta</p>
+                <div class="code-block">git remote -v  # Ver URL atual
+git remote set-url origin URL-CORRETA  # Corrigir URL</div>
+
+                <h4>3. Site não atualiza</h4>
+                <p><strong>Solução:</strong></p>
+                <ul>
+                    <li>Aguarde 2-5 minutos</li>
+                    <li>Limpe cache do navegador (Ctrl + Shift + Delete)</li>
+                    <li>Verifique se o push foi bem-sucedido</li>
+                </ul>
+
+                <h4>4. Arquivos muito grandes</h4>
+                <p><strong>Solução:</strong> Adicione ao .gitignore</p>
+                <div class="code-block">*.pdf
+*.mp4
+*.zip</div>
+            </div>
+
+            <div class="tip">
+                <h3>📱 Como Compartilhar o Jogo:</h3>
+                
+                <h4>1. Link Direto:</h4>
+                <div class="code-block">https://seu-usuario.github.io/edugames-brasil/</div>
+
+                <h4>2. QR Code:</h4>
+                <p>Use: <a href="https://www.qr-code-generator.com/" target="_blank">https://www.qr-code-generator.com/</a></p>
+                <p>Cole a URL do seu jogo e baixe o QR Code. Alunos podem escanear com celular!</p>
+
+                <h4>3. Incorporar em site:</h4>
+                <div class="code-block">&lt;iframe src="https://seu-usuario.github.io/edugames-brasil/" 
+        width="100%" height="600px"&gt;&lt;/iframe&gt;</div>
+            </div>
+        </section>
+
+        <section style="background: #f6f8fa; padding: 30px; border-radius: 10px; margin-top: 40px;">
+            <h2>🎓 Recursos Adicionais</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 20px;">
+                <a href="https://git-scm.com/doc" target="_blank" class="btn">📚 Documentação Git</a>
+                <a href="https://guides.github.com/" target="_blank" class="btn">📖 GitHub Guides</a>
+                <a href="https://pages.github.com/" target="_blank" class="btn">🌐 GitHub Pages</a>
+                <a href="https://www.markdownguide.org/" target="_blank" class="btn">📝 Markdown Guide</a>
+            </div>
+        </section>
+
+        <section style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; border-radius: 10px; margin-top: 40px; text-align: center;">
+            <h2 style="color: white; border: none;">✅ Checklist Final</h2>
+            <div style="text-align: left; max-width: 600px; margin: 20px auto;">
+                <p>☐ Conta no GitHub criada</p>
+                <p>☐ Git instalado no computador</p>
+                <p>☐ Repositório criado no GitHub</p>
+                <p>☐ Projeto enviado com git push</p>
+                <p>☐ GitHub Pages ativado</p>
+                <p>☐ Site funcionando online</p>
+                <p>☐ README.md atualizado</p>
+                <p>☐ Link compartilhado com alunos</p>
+            </div>
+            <h2 style="color: white; border: none; margin-top: 30px;">🎉 Parabéns!</h2>
+            <p style="font-size: 1.2em;">Seu jogo está online e acessível para o mundo todo!</p>
+        </section>
+
+        <footer style="margin-top: 50px; padding: 30px; background: #f0f0f0; text-align: center; border-radius: 10px;">
+            <p><strong>Desenvolvido por Prof. Borges</strong></p>
+            <p style="margin-top: 10px; color: #666;">EduGames Brasil - 2024</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,7 +1,19 @@
 class ExpandedMathGame {
     constructor() {
-        this.currentAge = '7-10';
-        this.currentMode = 'counting';
+        // Verificar idade da sessão
+        const session = JSON.parse(localStorage.getItem('edugames_session') || '{}');
+        
+        if (session.age >= 10 && session.age <= 14) {
+            this.currentAge = '10-14';
+            this.currentMode = 'fractions';
+        } else {
+            this.currentAge = '15-18';
+            this.currentMode = 'functions';
+        }
+        
+        console.log('Sessão:', session);
+        console.log('Idade detectada:', session.age);
+        console.log('Grupo definido:', this.currentAge);
         this.currentLevel = 1;
         this.currentProblem = null;
         this.stats = {
@@ -123,54 +135,31 @@ class ExpandedMathGame {
     
     init() {
         this.bindEvents();
-        this.generateProblem();
-        this.playWelcomeSound();
-    }
-    
-    playWelcomeSound() {
-        if ('speechSynthesis' in window) {
-            setTimeout(() => {
-                const utterance = new SpeechSynthesisUtterance();
-                utterance.text = 'Bem-vindos ao EduGames Brasil - Matemática Completa! Escolha sua faixa etária para começar.';
-                utterance.lang = 'pt-BR';
-                utterance.rate = 0.9;
-                utterance.pitch = 1.1;
-                speechSynthesis.speak(utterance);
-            }, 500);
-        }
-    }
-    
-    switchAge(age) {
-        // Parar qualquer áudio anterior
-        speechSynthesis.cancel();
-        
-        this.currentAge = age;
-        this.stats = { correct: 0, total: 0, streak: 0 };
-        
-        document.querySelectorAll('.age-btn').forEach(btn => {
-            btn.classList.remove('active');
-        });
-        
-        document.querySelectorAll('.level-section').forEach(section => {
-            section.classList.add('hidden');
-        });
-        
-        document.querySelector(`[data-age="${age}"]`).classList.add('active');
-        
-        if (age === '7-10') {
-            document.getElementById('basic-level').classList.remove('hidden');
-            this.currentMode = 'counting';
-        } else if (age === '10-14') {
-            document.getElementById('intermediate-level').classList.remove('hidden');
-            this.currentMode = 'fractions';
-        } else if (age === '15-18') {
-            document.getElementById('advanced-level').classList.remove('hidden');
-            this.currentMode = 'functions';
-        }
-        
+        this.setupAgeLevel();
         this.generateProblem();
         this.updateStats();
     }
+    
+    setupAgeLevel() {
+        console.log('Idade atual:', this.currentAge);
+        if (this.currentAge === '10-14') {
+            document.getElementById('intermediate-level').classList.remove('hidden');
+            document.getElementById('advanced-level').classList.add('hidden');
+            document.getElementById('math-title').textContent = '🧮 EduGames Brasil - Matemática Intermediária 🧮';
+            document.getElementById('math-subtitle').textContent = 'Ensino Fundamental - 10 a 14 anos';
+            console.log('Mostrando nível intermediário');
+        } else {
+            document.getElementById('advanced-level').classList.remove('hidden');
+            document.getElementById('intermediate-level').classList.add('hidden');
+            document.getElementById('math-title').textContent = '🧮 EduGames Brasil - Matemática Avançada 🧮';
+            document.getElementById('math-subtitle').textContent = 'Ensino Médio - 15 a 18 anos';
+            console.log('Mostrando nível avançado');
+        }
+    }
+    
+
+    
+
     
     switchMode(mode) {
         // Parar qualquer áudio anterior
@@ -188,47 +177,44 @@ class ExpandedMathGame {
     }
     
     generateProblem() {
-        let problems;
+        try {
+            let problems;
+            
+            if (this.currentAge === '10-14') {
+                problems = this.intermediateProblems[this.currentMode];
+            } else {
+                problems = this.advancedProblems[this.currentMode];
+            }
+            
+            if (!problems || problems.length === 0) {
+                if (this.currentAge === '10-14') {
+                    problems = this.intermediateProblems.fractions;
+                } else {
+                    problems = this.advancedProblems.functions;
+                }
+            }
+            
+            const randomIndex = Math.floor(Math.random() * problems.length);
+            this.currentProblem = problems[randomIndex];
         
-        if (this.currentAge === '7-10') {
-            problems = this.basicProblems[this.currentMode];
-        } else if (this.currentAge === '10-14') {
-            problems = this.intermediateProblems[this.currentMode];
-        } else if (this.currentAge === '15-18') {
-            problems = this.advancedProblems[this.currentMode];
-        }
-        
-        if (!problems || problems.length === 0) return;
-        
-        const randomIndex = Math.floor(Math.random() * problems.length);
-        this.currentProblem = problems[randomIndex];
-        
-        document.getElementById('problem-text').textContent = this.currentProblem.question;
-        
-        // Mostrar visual se disponível
-        const visualElement = document.getElementById('problem-visual');
-        if (this.currentProblem.visual) {
-            visualElement.textContent = this.currentProblem.visual;
-            visualElement.style.display = 'block';
-        } else {
-            visualElement.style.display = 'none';
-        }
-        
-        // Limpar resposta anterior
-        document.getElementById('answer-input').value = '';
-        
-        // Configurar tipo de resposta baseado na idade
-        if (this.currentAge === '7-10') {
-            // Crianças: sempre múltipla escolha
+            document.getElementById('problem-text').textContent = this.currentProblem.question;
+            
+            // Mostrar visual se disponível
+            const visualElement = document.getElementById('problem-visual');
+            if (this.currentProblem.visual) {
+                visualElement.textContent = this.currentProblem.visual;
+                visualElement.style.display = 'block';
+            } else {
+                visualElement.style.display = 'none';
+            }
+            
+            // Limpar resposta anterior
+            document.getElementById('answer-input').value = '';
+            
+            // Sempre usar múltipla escolha para ensino médio
             this.setupMultipleChoice();
-        } else if (this.currentAge === '15-18' && (this.currentMode === 'functions' || this.currentMode === 'formulas')) {
-            // Ensino médio: múltipla escolha para funções e fórmulas
-            this.setupMultipleChoice();
-        } else {
-            // Outros casos: digitação
-            document.getElementById('multiple-choice').classList.add('hidden');
-            document.getElementById('input-answer').classList.remove('hidden');
-            document.getElementById('answer-input').focus();
+        } catch (error) {
+            console.error('Erro ao gerar problema:', error);
         }
     }
     
@@ -395,13 +381,7 @@ class ExpandedMathGame {
     }
     
     bindEvents() {
-        // Seleção de idade
-        document.querySelectorAll('.age-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const age = btn.dataset.age;
-                this.switchAge(age);
-            });
-        });
+
         
         // Modos de jogo e botões de revisão (delegação de eventos)
         document.addEventListener('click', (e) => {
@@ -412,6 +392,11 @@ class ExpandedMathGame {
             
             if (e.target.id === 'review-btn-intermediate') {
                 this.showReview('intermediate');
+            }
+            
+            if (e.target.id === 'review-btn-intermediate') {
+                document.getElementById('game-area').classList.add('hidden');
+                document.getElementById('review-section').classList.remove('hidden');
             }
             
             if (e.target.id === 'review-btn-advanced') {
@@ -445,7 +430,8 @@ class ExpandedMathGame {
         
         // Voltar da revisão
         document.getElementById('back-to-game')?.addEventListener('click', () => {
-            this.hideReview();
+            document.getElementById('review-section').classList.add('hidden');
+            document.getElementById('game-area').classList.remove('hidden');
         });
     }
     
@@ -492,5 +478,31 @@ class ExpandedMathGame {
 
 // Inicializar o jogo
 document.addEventListener('DOMContentLoaded', () => {
-    new ExpandedMathGame();
+    try {
+        const session = JSON.parse(localStorage.getItem('edugames_session') || '{}');
+        
+        if (!session.age) {
+            alert('Sessão não encontrada. Você será redirecionado para a página inicial.');
+            window.location.href = 'index.html';
+            return;
+        }
+        
+        if (session.age < 10 || session.age > 18) {
+            alert('Este jogo é destinado para estudantes de 10 a 18 anos. Você será redirecionado para a página inicial.');
+            window.location.href = 'index.html';
+            return;
+        }
+        
+        if (Date.now() - session.timestamp > 24 * 60 * 60 * 1000) {
+            alert('Sua sessão expirou. Faça login novamente.');
+            window.location.href = 'index.html';
+            return;
+        }
+        
+        new ExpandedMathGame();
+    } catch (error) {
+        console.error('Erro ao inicializar jogo:', error);
+        alert('Erro ao carregar o jogo. Você será redirecionado para a página inicial.');
+        window.location.href = 'index.html';
+    }
 });

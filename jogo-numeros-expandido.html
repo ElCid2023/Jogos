@@ -9,39 +9,26 @@
 <body>
     <div class="container">
         <header>
-            <h1>🧮 EduGames Brasil - Matemática Completa 🧮</h1>
-            <p>De 7 a 18 anos - Todos os níveis!</p>
+            <h1 id="math-title">🧮 EduGames Brasil - Matemática 🧮</h1>
+            <p id="math-subtitle">Carregando...</p>
             <div class="game-nav">
-                <button onclick="window.location.href='index.html#age-selection'" class="nav-btn">🏠 Início</button>
-                <button onclick="window.location.href='jogo-alfabeto/index.html'" class="nav-btn">🔤 Alfabeto</button>
+                <button onclick="goHome()" class="nav-btn">🏠 Início</button>
+                <button onclick="exitGame()" class="nav-btn">🚪 Sair</button>
             </div>
         </header>
 
-        <div class="age-selector">
-            <h2>Selecione sua Faixa Etária:</h2>
-            <div class="age-buttons">
-                <button class="age-btn active" data-age="7-10">7-10 anos<br>Básico</button>
-                <button class="age-btn" data-age="10-14">10-14 anos<br>Intermediário</button>
-                <button class="age-btn" data-age="15-18">15-18 anos<br>Avançado</button>
-            </div>
+        <div class="age-selector hidden">
+            <h2 id="content-title">Conteúdo Matemático:</h2>
         </div>
 
         <div id="game-area">
-            <!-- Nível 7-10 anos -->
-            <div id="basic-level" class="level-section">
-                <div class="game-modes">
-                    <button id="counting-mode" class="mode-btn active">🔢 Contagem</button>
-                    <button id="operations-mode" class="mode-btn">➕ Operações</button>
-                </div>
-            </div>
-
             <!-- Nível 10-14 anos -->
             <div id="intermediate-level" class="level-section hidden">
                 <div class="game-modes">
                     <button id="fractions-mode" class="mode-btn active">🍰 Frações</button>
                     <button id="equations-mode" class="mode-btn">📐 Equações</button>
                     <button id="geometry-mode" class="mode-btn">📏 Geometria</button>
-                    <button id="review-btn-intermediate" class="review-btn">📚 Revisão</button>
+                    <button id="review-btn-intermediate" class="mode-btn">📚 Revisão</button>
                 </div>
             </div>
 
@@ -76,7 +63,7 @@
             </div>
 
             <div class="controls">
-                <button id="next-problem" class="btn-secondary">➡️ Próximo</button>
+                <button id="next-problem" class="btn-secondary">🎯 Novo Desafio</button>
                 <button id="hint-btn" class="btn-secondary">💡 Dica</button>
             </div>
 
@@ -99,16 +86,59 @@
         <!-- Tela de Revisão -->
         <div id="review-section" class="hidden">
             <div class="review-header">
-                <h2>📚 Revisão Rápida - <span id="review-title">Matemática</span></h2>
+                <h2>📚 Revisão de Matemática Intermediária</h2>
                 <button id="back-to-game" class="btn-primary">⬅️ Voltar ao Jogo</button>
             </div>
             
-            <div id="review-content" class="review-content">
-                <!-- Conteúdo da revisão será inserido aqui -->
+            <div id="review-content" class="review-content" style="padding: 20px;">
+                <div class="review-topic" style="margin-bottom: 25px; padding: 15px; background: #f7fafc; border-radius: 10px;">
+                    <h3 style="color: #667eea;">🍰 Frações</h3>
+                    <p><strong>Definição:</strong> Fração representa partes de um todo. O numerador (em cima) indica quantas partes temos, o denominador (embaixo) em quantas partes o todo foi dividido.</p>
+                    <p><strong>Soma de frações:</strong></p>
+                    <p>• Denominadores iguais: some os numeradores</p>
+                    <p>• Denominadores diferentes: encontre o MMC</p>
+                    <p><strong>Exemplo:</strong> 1/4 + 2/4 = 3/4 | 1/2 + 1/3 = 3/6 + 2/6 = 5/6</p>
+                </div>
+                
+                <div class="review-topic" style="margin-bottom: 25px; padding: 15px; background: #f0fff4; border-radius: 10px;">
+                    <h3 style="color: #48bb78;">📐 Equações do 1º Grau</h3>
+                    <p><strong>Forma geral:</strong> ax + b = c (onde a ≠ 0)</p>
+                    <p><strong>Método de resolução:</strong></p>
+                    <p>1. Isole os termos com x de um lado</p>
+                    <p>2. Isole os números do outro lado</p>
+                    <p>3. Divida pelo coeficiente de x</p>
+                    <p><strong>Exemplo:</strong> 3x + 5 = 14 → 3x = 14 - 5 → 3x = 9 → x = 3</p>
+                </div>
+                
+                <div class="review-topic" style="margin-bottom: 25px; padding: 15px; background: #fffaf0; border-radius: 10px;">
+                    <h3 style="color: #ed8936;">📏 Geometria Plana</h3>
+                    <p><strong>Retângulo:</strong></p>
+                    <p>• Área = base × altura</p>
+                    <p>• Perímetro = 2 × (base + altura)</p>
+                    <p><strong>Quadrado:</strong></p>
+                    <p>• Área = lado × lado = lado²</p>
+                    <p>• Perímetro = 4 × lado</p>
+                    <p><strong>Triângulo:</strong></p>
+                    <p>• Área = (base × altura) ÷ 2</p>
+                </div>
             </div>
         </div>
     </div>
 
+    <script>
+        function goHome() {
+            // Volta para seleção de jogos SEM limpar sessão
+            window.location.href = 'index.html';
+        }
+        
+        function exitGame() {
+            // Limpa sessão e sai completamente
+            localStorage.removeItem('edugames_session');
+            localStorage.removeItem('studentName');
+            localStorage.removeItem('studentAge');
+            window.location.href = 'index.html';
+        }
+    </script>
     <script src="script-matematica-expandido.js"></script>
 </body>
 </html>

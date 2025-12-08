@@ -1,6 +1,7 @@
 class AdvancedPortugueseGame {
     constructor() {
-        this.studentName = this.getStudentNameFromURL() || 'Estudante';
+        const session = JSON.parse(localStorage.getItem('edugames_session') || '{}');
+        this.studentName = session.name || 'Estudante';
         this.currentMode = 'subordinadas';
         this.currentChallenge = 0;
         this.sessionStartTime = null;
@@ -195,21 +196,10 @@ class AdvancedPortugueseGame {
     
     init() {
         this.bindEvents();
-        this.playWelcomeSound();
-        // Iniciar jogo diretamente
-        setTimeout(() => {
-            this.sessionStartTime = new Date();
-            this.startTimer();
-            this.startChallenge();
-        }, 4000);
+        this.sessionStartTime = new Date();
+        this.startTimer();
+        this.startChallenge();
     }
-    
-    getStudentNameFromURL() {
-        const urlParams = new URLSearchParams(window.location.search);
-        return urlParams.get('nome') || localStorage.getItem('studentName');
-    }
-    
-
     
     playWelcomeSound() {
         if ('speechSynthesis' in window) {
@@ -281,32 +271,28 @@ class AdvancedPortugueseGame {
     }
     
     startSubordinadasChallenge() {
-        // Embaralhar perguntas
-        const shuffledData = [...this.subordinadasData].sort(() => Math.random() - 0.5);
-        const data = shuffledData[this.currentChallenge % shuffledData.length];
-        
-        document.getElementById('sentence-text').textContent = data.sentence;
-        document.getElementById('highlighted-clause').textContent = data.clause;
-        
-        const container = document.getElementById('subordinadas-options');
-        container.innerHTML = '';
-        
-        // Embaralhar opções
-        const shuffledOptions = [...data.options].sort(() => Math.random() - 0.5);
-        
-        shuffledOptions.forEach(option => {
-            const button = document.createElement('button');
-            button.className = 'option-btn';
-            button.textContent = option;
-            button.addEventListener('click', () => this.checkAnswer(option, data.answer, button));
-            container.appendChild(button);
-        });
-        
-        if (!this.hasPlayedInstructions.subordinadas) {
-            setTimeout(() => {
-                this.speakText('Classifique a oração subordinada destacada na frase.');
-            }, 500);
-            this.hasPlayedInstructions.subordinadas = true;
+        try {
+            const data = this.subordinadasData[this.currentChallenge % this.subordinadasData.length];
+            
+            document.getElementById('sentence-text').textContent = data.sentence;
+            document.getElementById('highlighted-clause').textContent = data.clause;
+            
+            const container = document.getElementById('subordinadas-options');
+            container.innerHTML = '';
+            
+            data.options.forEach(option => {
+                const button = document.createElement('button');
+                button.className = 'option-btn';
+                button.textContent = option;
+                button.addEventListener('click', () => this.checkAnswer(option, data.answer, button));
+                container.appendChild(button);
+            });
+            
+            if (!this.hasPlayedInstructions.subordinadas) {
+                this.hasPlayedInstructions.subordinadas = true;
+            }
+        } catch (error) {
+            console.error('Erro ao iniciar desafio:', error);
         }
     }
     
@@ -521,16 +507,6 @@ class AdvancedPortugueseGame {
     }
     
     bindEvents() {
-        document.getElementById('start-session').addEventListener('click', () => {
-            this.startSession();
-        });
-        
-        document.getElementById('student-name').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                this.startSession();
-            }
-        });
-        
         // Modos de jogo
         document.getElementById('subordinadas-mode').addEventListener('click', () => {
             this.switchMode('subordinadas');
@@ -625,5 +601,31 @@ class AdvancedPortugueseGame {
 
 // Inicializar o jogo
 document.addEventListener('DOMContentLoaded', () => {
-    new AdvancedPortugueseGame();
+    try {
+        const session = JSON.parse(localStorage.getItem('edugames_session') || '{}');
+        
+        if (!session.age) {
+            alert('Sessão não encontrada. Você será redirecionado para a página inicial.');
+            window.location.href = 'index.html';
+            return;
+        }
+        
+        if (session.age < 15 || session.age > 18) {
+            alert('Este jogo é destinado para estudantes de 15 a 18 anos. Você será redirecionado para a página inicial.');
+            window.location.href = 'index.html';
+            return;
+        }
+        
+        if (Date.now() - session.timestamp > 24 * 60 * 60 * 1000) {
+            alert('Sua sessão expirou. Faça login novamente.');
+            window.location.href = 'index.html';
+            return;
+        }
+        
+        new AdvancedPortugueseGame();
+    } catch (error) {
+        console.error('Erro ao inicializar jogo:', error);
+        alert('Erro ao carregar o jogo. Você será redirecionado para a página inicial.');
+        window.location.href = 'index.html';
+    }
 });

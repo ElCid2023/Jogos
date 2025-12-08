@@ -12,7 +12,8 @@
             <h1>📚 EduGames Brasil - Português Avançado 📚</h1>
             <p>Ensino Médio - 15 a 18 anos</p>
             <div class="game-nav">
-                <button onclick="window.location.href='index.html#age-selection'" class="nav-btn">🏠 Início</button>
+                <button onclick="goHome()" class="nav-btn">🏠 Início</button>
+                <button onclick="exitGame()" class="nav-btn">🚪 Sair</button>
                 <button onclick="window.location.href='jogo-gramatica/index.html'" class="nav-btn">📖 Gramática Básica</button>
             </div>
         </header>
@@ -91,7 +92,7 @@
 
             <div class="controls">
                 <button id="check-answer" class="btn-primary">✅ Verificar</button>
-                <button id="next-challenge" class="btn-secondary">➡️ Próximo</button>
+                <button id="next-challenge" class="btn-secondary">🎯 Novo Desafio</button>
                 <button id="hint-btn" class="btn-secondary">💡 Dica</button>
                 <button id="finish-session" class="btn-warning">🏁 Finalizar Sessão</button>
             </div>
@@ -168,6 +169,20 @@
         </div>
     </div>
 
+    <script>
+        function goHome() {
+            // Volta para seleção de jogos SEM limpar sessão
+            window.location.href = 'index.html';
+        }
+        
+        function exitGame() {
+            // Limpa sessão e sai completamente
+            localStorage.removeItem('edugames_session');
+            localStorage.removeItem('studentName');
+            localStorage.removeItem('studentAge');
+            window.location.href = 'index.html';
+        }
+    </script>
     <script src="script-portugues-avancado.js"></script>
 </body>
 </html>
