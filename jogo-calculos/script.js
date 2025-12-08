@@ -459,10 +459,41 @@ class CalculusGame {
         document.getElementById('new-session').addEventListener('click', () => {
             this.newSession();
         });
+        
+        document.getElementById('review-btn').addEventListener('click', () => {
+            document.getElementById('game-area').classList.add('hidden');
+            document.getElementById('review-section').classList.remove('hidden');
+        });
     }
 }
 
 // Inicializar o jogo
 document.addEventListener('DOMContentLoaded', () => {
-    new CalculusGame();
+    try {
+        const session = JSON.parse(localStorage.getItem('edugames_session') || '{}');
+        
+        if (!session.age) {
+            alert('Sessão não encontrada. Você será redirecionado para a página inicial.');
+            window.location.href = '../index.html';
+            return;
+        }
+        
+        if (session.age < 10 || session.age > 14) {
+            alert('Este jogo é destinado para estudantes de 10 a 14 anos. Você será redirecionado para a página inicial.');
+            window.location.href = '../index.html';
+            return;
+        }
+        
+        if (Date.now() - session.timestamp > 24 * 60 * 60 * 1000) {
+            alert('Sua sessão expirou. Faça login novamente.');
+            window.location.href = '../index.html';
+            return;
+        }
+        
+        new CalculusGame();
+    } catch (error) {
+        console.error('Erro ao verificar sessão:', error);
+        alert('Erro de acesso. Você será redirecionado para a página inicial.');
+        window.location.href = '../index.html';
+    }
 });
