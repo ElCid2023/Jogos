@@ -416,7 +416,7 @@ class AlphabetGame {
         
         // Encontrar slot sob o dedo
         element.style.display = 'none';
-        const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
+        let elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
         element.style.display = '';
         
         element.classList.remove('dragging');
@@ -427,8 +427,17 @@ class AlphabetGame {
         element.style.top = '';
         element.style.transform = '';
         
-        if (elementBelow && elementBelow.classList.contains('letter-slot')) {
-            const slot = elementBelow;
+        // Verificar se é letter-slot ou está dentro de um
+        let slot = null;
+        if (elementBelow) {
+            if (elementBelow.classList.contains('letter-slot')) {
+                slot = elementBelow;
+            } else if (elementBelow.closest('.letter-slot')) {
+                slot = elementBelow.closest('.letter-slot');
+            }
+        }
+        
+        if (slot) {
             const slotIndex = parseInt(slot.dataset.index);
             
             if (this.touchData.letter === slot.dataset.letter && !this.wordSlots[slotIndex].filled) {
@@ -465,13 +474,17 @@ class AlphabetGame {
         if (allFilled) {
             this.playSuccessSound();
             this.addScore(50);
-            document.getElementById('next-phase').classList.remove('hidden');
             
             // Animação de sucesso
             document.querySelector('.target-word').style.transform = 'scale(1.1)';
             setTimeout(() => {
                 document.querySelector('.target-word').style.transform = 'scale(1)';
             }, 500);
+            
+            // Avançar automaticamente após 2 segundos
+            setTimeout(() => {
+                this.nextPhase();
+            }, 2000);
         }
     }
 
