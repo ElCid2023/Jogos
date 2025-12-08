@@ -5,6 +5,7 @@ class GrammarGame {
         this.score = 0;
         this.streak = 0;
         this.currentChallenge = 0;
+        this.touchData = null;
         this.hasPlayedInstructions = {
             morphology: false,
             syntax: false,
@@ -248,6 +249,11 @@ class GrammarGame {
             wordEl.addEventListener('dragstart', this.handleDragStart.bind(this));
             wordEl.addEventListener('dragend', this.handleDragEnd.bind(this));
             
+            // Eventos touch para mobile
+            wordEl.addEventListener('touchstart', this.handleTouchStart.bind(this));
+            wordEl.addEventListener('touchmove', this.handleTouchMove.bind(this));
+            wordEl.addEventListener('touchend', this.handleTouchEnd.bind(this));
+            
             wordBank.appendChild(wordEl);
         });
         
@@ -469,6 +475,88 @@ class GrammarGame {
         if (originalEl) {
             originalEl.remove();
         }
+    }
+    
+    // Métodos para suporte touch (mobile)
+    handleTouchStart(e) {
+        e.preventDefault();
+        const touch = e.touches[0];
+        const element = e.target;
+        
+        element.classList.add('dragging');
+        element.style.position = 'fixed';
+        element.style.zIndex = '1000';
+        element.style.opacity = '0.8';
+        
+        this.touchData = {
+            element: element,
+            word: element.dataset.word,
+            index: element.dataset.index,
+            startX: touch.clientX,
+            startY: touch.clientY
+        };
+        
+        this.moveTouchElement(touch.clientX, touch.clientY);
+    }
+
+    handleTouchMove(e) {
+        e.preventDefault();
+        if (!this.touchData) return;
+        
+        const touch = e.touches[0];
+        this.moveTouchElement(touch.clientX, touch.clientY);
+    }
+
+    handleTouchEnd(e) {
+        e.preventDefault();
+        if (!this.touchData) return;
+        
+        const touch = e.changedTouches[0];
+        const element = this.touchData.element;
+        
+        // Encontrar zona de drop sob o dedo
+        element.style.display = 'none';
+        let elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
+        element.style.display = '';
+        
+        element.classList.remove('dragging');
+        element.style.position = '';
+        element.style.zIndex = '';
+        element.style.opacity = '';
+        element.style.left = '';
+        element.style.top = '';
+        
+        // Verificar se é drop-zone ou está dentro de uma
+        let dropZone = null;
+        if (elementBelow) {
+            if (elementBelow.classList.contains('drop-zone')) {
+                dropZone = elementBelow;
+            } else if (elementBelow.closest('.drop-zone')) {
+                dropZone = elementBelow.closest('.drop-zone');
+            }
+        }
+        
+        if (dropZone) {
+            // Criar elemento dropped
+            const droppedEl = document.createElement('div');
+            droppedEl.className = 'dropped-word';
+            droppedEl.textContent = this.touchData.word;
+            
+            dropZone.appendChild(droppedEl);
+            
+            // Remover da word bank
+            element.remove();
+        }
+        
+        this.touchData = null;
+    }
+
+    moveTouchElement(x, y) {
+        if (!this.touchData) return;
+        
+        const element = this.touchData.element;
+        element.style.left = (x - element.offsetWidth / 2) + 'px';
+        element.style.top = (y - element.offsetHeight / 2) + 'px';
     }
 }
 
