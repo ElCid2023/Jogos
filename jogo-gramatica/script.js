@@ -426,6 +426,13 @@ class GrammarGame {
             this.showHint();
         });
         
+        document.getElementById('review-btn').addEventListener('click', () => {
+            document.querySelectorAll('.game-section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            document.getElementById('review-section').classList.remove('hidden');
+        });
+        
         // Eventos de drag and drop para análise
         document.querySelectorAll('.drop-zone').forEach(zone => {
             zone.addEventListener('dragover', this.handleDragOver.bind(this));
@@ -467,5 +474,31 @@ class GrammarGame {
 
 // Inicializar o jogo
 document.addEventListener('DOMContentLoaded', () => {
-    new GrammarGame();
+    try {
+        const session = JSON.parse(localStorage.getItem('edugames_session') || '{}');
+        
+        if (!session.age) {
+            alert('Sessão não encontrada. Você será redirecionado para a página inicial.');
+            window.location.href = '../index.html';
+            return;
+        }
+        
+        if (session.age < 10 || session.age > 14) {
+            alert('Este jogo é destinado para estudantes de 10 a 14 anos. Você será redirecionado para a página inicial.');
+            window.location.href = '../index.html';
+            return;
+        }
+        
+        if (Date.now() - session.timestamp > 24 * 60 * 60 * 1000) {
+            alert('Sua sessão expirou. Faça login novamente.');
+            window.location.href = '../index.html';
+            return;
+        }
+        
+        new GrammarGame();
+    } catch (error) {
+        console.error('Erro ao verificar sessão:', error);
+        alert('Erro de acesso. Você será redirecionado para a página inicial.');
+        window.location.href = '../index.html';
+    }
 });

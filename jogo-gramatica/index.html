@@ -12,7 +12,7 @@
             <h1>📚 EduGames Brasil - Gramática 📚</h1>
             <p>Morfologia, Sintaxe e Análise de Orações</p>
             <div class="game-nav">
-                <button onclick="window.location.href='../index.html#age-selection'" class="nav-btn">🏠 Início</button>
+                <button onclick="window.location.href='../index.html'" class="nav-btn">🏠 Início</button>
                 <button onclick="window.location.href='../jogo-calculos/index.html'" class="nav-btn">🧮 Cálculos</button>
             </div>
         </header>
@@ -21,6 +21,7 @@
             <button id="morphology-mode" class="mode-btn active">🔤 Morfologia</button>
             <button id="syntax-mode" class="mode-btn">🔗 Sintaxe</button>
             <button id="analysis-mode" class="mode-btn">🔍 Análise de Orações</button>
+            <button id="review-btn" class="mode-btn">📚 Revisão</button>
         </div>
 
         <!-- Modo Morfologia -->
@@ -86,7 +87,7 @@
 
         <div class="controls">
             <button id="check-answer" class="btn-primary">✅ Verificar</button>
-            <button id="next-challenge" class="btn-secondary">➡️ Próximo</button>
+            <button id="next-challenge" class="btn-secondary">🎯 Novo Desafio</button>
             <button id="hint-btn" class="btn-secondary">💡 Dica</button>
         </div>
 
@@ -94,6 +95,40 @@
             <div class="score">Pontuação: <span id="score">0</span></div>
             <div class="level">Nível: <span id="level">1</span></div>
             <div class="streak">Sequência: <span id="streak">0</span> 🔥</div>
+        </div>
+        
+        <!-- Seção de Revisão -->
+        <div id="review-section" class="game-section hidden">
+            <div class="review-content">
+                <h2>📚 Revisão de Gramática</h2>
+                
+                <div class="review-topic">
+                    <h3>Morfologia - Classes Gramaticais</h3>
+                    <p><strong>Substantivo:</strong> Nomeia seres, objetos, lugares, sentimentos. Ex: casa, amor, João</p>
+                    <p><strong>Adjetivo:</strong> Qualifica ou caracteriza o substantivo. Ex: bonito, grande, inteligente</p>
+                    <p><strong>Verbo:</strong> Indica ação, estado ou fenômeno. Ex: correr, ser, chover</p>
+                    <p><strong>Advérbio:</strong> Modifica verbo, adjetivo ou outro advérbio. Ex: rapidamente, muito, ontem</p>
+                </div>
+                
+                <div class="review-topic">
+                    <h3>Sintaxe - Funções Sintáticas</h3>
+                    <p><strong>Sujeito:</strong> Ser sobre quem se declara algo. Ex: "O menino" estuda</p>
+                    <p><strong>Predicado:</strong> Declaração sobre o sujeito. Ex: O menino "estuda matemática"</p>
+                    <p><strong>Objeto Direto:</strong> Complemento do verbo sem preposição. Ex: Leu "o livro"</p>
+                    <p><strong>Adjunto Adverbial:</strong> Indica circunstância. Ex: Chegou "ontem" (tempo)</p>
+                </div>
+                
+                <div class="review-topic">
+                    <h3>Análise Sintática</h3>
+                    <p><strong>Como analisar:</strong></p>
+                    <p>1. Identifique o verbo (núcleo do predicado)</p>
+                    <p>2. Pergunte "quem?" ao verbo para achar o sujeito</p>
+                    <p>3. Veja se há complementos (objetos)</p>
+                    <p>4. Identifique circunstâncias (adjuntos adverbiais)</p>
+                </div>
+                
+                <button onclick="document.getElementById('review-section').classList.add('hidden'); document.getElementById('morphology-section').classList.remove('hidden');" class="btn-primary">Voltar ao Jogo</button>
+            </div>
         </div>
     </div>
 
