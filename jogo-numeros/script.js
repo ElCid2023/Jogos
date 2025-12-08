@@ -11,6 +11,7 @@ class NumbersGame {
             math: false
         };
         this.consecutiveErrors = 0;
+        this.hasPlayedWelcome = false;
         
         this.numbers = [
             { num: 1, word: 'UM', visual: '🟦' },
@@ -32,12 +33,19 @@ class NumbersGame {
         this.createNumbersGrid();
         this.updateNumberDisplay();
         this.bindEvents();
-        this.playWelcomeSound();
+        
+        // Tocar áudio após primeira interação (Opera)
+        document.addEventListener('click', () => {
+            if (!this.hasPlayedWelcome) {
+                this.hasPlayedWelcome = true;
+                this.playWelcomeSound();
+            }
+        }, { once: true });
     }
 
     createNumbersGrid() {
         const grid = document.getElementById('numbers-grid');
-        for (let i = 1; i <= 20; i++) {
+        for (let i = 1; i <= 100; i++) {
             const button = document.createElement('button');
             button.className = 'number-btn';
             button.textContent = i;
@@ -107,7 +115,7 @@ class NumbersGame {
     playWelcomeSound() {
         if ('speechSynthesis' in window) {
             const utterance = new SpeechSynthesisUtterance();
-            utterance.text = 'Bem-vindos ao jogo de números! Vamos aprender matemática!';
+            utterance.text = 'Aprenda matemática de forma divertida! Clique nos números para ouvir e aprender!';
             utterance.lang = 'pt-BR';
             utterance.rate = 0.9;
             utterance.pitch = 1.1;
@@ -131,6 +139,18 @@ class NumbersGame {
             document.getElementById('numbers-section').classList.add('hidden');
             document.getElementById('math-section').classList.remove('hidden');
             this.generateMathProblem();
+            
+            // Áudio de instrução para o modo matemática
+            if ('speechSynthesis' in window) {
+                setTimeout(() => {
+                    const utterance = new SpeechSynthesisUtterance();
+                    utterance.text = 'Faça a conta e clique no número da resposta!';
+                    utterance.lang = 'pt-BR';
+                    utterance.rate = 0.9;
+                    utterance.pitch = 1.1;
+                    speechSynthesis.speak(utterance);
+                }, 500);
+            }
         }
     }
 
@@ -292,13 +312,13 @@ class NumbersGame {
     }
 
     nextNumber() {
-        this.currentNumber = this.currentNumber < 20 ? this.currentNumber + 1 : 1;
+        this.currentNumber = this.currentNumber < 100 ? this.currentNumber + 1 : 1;
         this.updateNumberDisplay();
         this.playNumberSound();
     }
 
     prevNumber() {
-        this.currentNumber = this.currentNumber > 1 ? this.currentNumber - 1 : 20;
+        this.currentNumber = this.currentNumber > 1 ? this.currentNumber - 1 : 100;
         this.updateNumberDisplay();
         this.playNumberSound();
     }
@@ -407,5 +427,27 @@ class NumbersGame {
 
 // Inicializar o jogo quando a página carregar
 document.addEventListener('DOMContentLoaded', () => {
-    new NumbersGame();
+    // Verificar acesso por idade
+    try {
+        const session = JSON.parse(localStorage.getItem('edugames_session') || '{}');
+        
+        if (!session.age || session.age < 7 || session.age > 10) {
+            alert('Este jogo é destinado para crianças de 7 a 10 anos. Você será redirecionado para a página inicial.');
+            window.location.href = '../index.html';
+            return;
+        }
+        
+        // Verificar se a sessão não expirou (24 horas)
+        if (Date.now() - session.timestamp > 24 * 60 * 60 * 1000) {
+            alert('Sua sessão expirou. Faça login novamente.');
+            window.location.href = '../index.html';
+            return;
+        }
+        
+        new NumbersGame();
+    } catch (error) {
+        console.error('Erro ao verificar sessão:', error);
+        alert('Erro de acesso. Você será redirecionado para a página inicial.');
+        window.location.href = '../index.html';
+    }
 });
