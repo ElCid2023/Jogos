@@ -182,7 +182,7 @@
             <p class="subtitle">Agora me diga quantos anos você tem:</p>
             
             <div style="text-align: center; margin: 30px 0;">
-                <input type="number" id="student-age" placeholder="Digite sua idade" min="7" max="18" style="padding: 15px; font-size: 1.2em; border-radius: 10px; border: 2px solid #667eea; width: 200px; text-align: center;">
+                <input type="number" id="student-age" placeholder="Digite sua idade" min="7" max="99" style="padding: 15px; font-size: 1.2em; border-radius: 10px; border: 2px solid #667eea; width: 200px; text-align: center;">
                 <br><br>
                 <button id="confirm-age" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 25px; padding: 15px 30px; font-size: 1.1em; cursor: pointer;">Confirmar Idade</button>
             </div>
@@ -234,7 +234,7 @@
             </div>
         </div>
         
-        <!-- Jogos 15-18 anos -->
+        <!-- Jogos 15+ anos -->
         <div id="games-15-18" class="games-section hidden">
             <h1>🎓 EduGames Brasil - <span id="player-name-15-18"></span> 🎓</h1>
             <button onclick="clearSession(); location.reload();" class="back-btn" style="margin-bottom: 20px;">Sair</button>
@@ -274,7 +274,7 @@
         
         function validateAge(age) {
             const numAge = parseInt(age);
-            if (isNaN(numAge) || numAge < 7 || numAge > 18) return null;
+            if (isNaN(numAge) || numAge < 7 || numAge > 99) return null;
             return numAge;
         }
         
@@ -358,7 +358,7 @@
                 const validatedAge = validateAge(ageInput.value);
                 
                 if (!validatedAge) {
-                    alert('Por favor, digite uma idade válida entre 7 e 18 anos!');
+                    alert('Por favor, digite uma idade válida entre 7 e 99 anos!');
                     return;
                 }
                 
@@ -411,14 +411,14 @@
                             speechSynthesis.speak(utterance);
                         }, 300);
                     }
-                } else if (age >= 15 && age <= 18) {
+                } else if (age >= 15) {
                     document.getElementById('games-15-18').classList.remove('hidden');
                     document.getElementById('player-name-15-18').textContent = name;
                     
                     if ('speechSynthesis' in window) {
                         setTimeout(() => {
                             const utterance = new SpeechSynthesisUtterance();
-                            utterance.text = `Ótimo, ${name}! Aqui você encontra conteúdo completo de ensino médio!`;
+                            utterance.text = `Ótimo, ${name}! Aqui você encontra conteúdo de ensino médio para estudar ou revisar!`;
                             utterance.lang = 'pt-BR';
                             utterance.rate = 0.9;
                             utterance.pitch = 1.1;
