@@ -5,6 +5,7 @@ class AlphabetGame {
         this.currentPhase = 0;
         this.score = 0;
         this.wordSlots = [];
+        this.touchData = null;
         this.hasPlayedInstructions = {
             letters: false,
             words: false
@@ -316,8 +317,14 @@ class AlphabetGame {
             letterEl.dataset.letter = letter;
             letterEl.dataset.id = index;
             
+            // Eventos desktop
             letterEl.addEventListener('dragstart', this.handleDragStart.bind(this));
             letterEl.addEventListener('dragend', this.handleDragEnd.bind(this));
+            
+            // Eventos mobile (touch)
+            letterEl.addEventListener('touchstart', this.handleTouchStart.bind(this));
+            letterEl.addEventListener('touchmove', this.handleTouchMove.bind(this));
+            letterEl.addEventListener('touchend', this.handleTouchEnd.bind(this));
             
             container.appendChild(letterEl);
         });
@@ -368,6 +375,88 @@ class AlphabetGame {
             this.consecutiveErrors++;
             this.playErrorFeedback();
         }
+    }
+
+    // Métodos para suporte touch (mobile)
+    handleTouchStart(e) {
+        e.preventDefault();
+        const touch = e.touches[0];
+        const element = e.target;
+        
+        element.classList.add('dragging');
+        element.style.position = 'fixed';
+        element.style.zIndex = '1000';
+        element.style.opacity = '0.8';
+        
+        this.touchData = {
+            element: element,
+            letter: element.dataset.letter,
+            id: element.dataset.id,
+            startX: touch.clientX,
+            startY: touch.clientY
+        };
+        
+        this.moveTouchElement(touch.clientX, touch.clientY);
+    }
+
+    handleTouchMove(e) {
+        e.preventDefault();
+        if (!this.touchData) return;
+        
+        const touch = e.touches[0];
+        this.moveTouchElement(touch.clientX, touch.clientY);
+    }
+
+    handleTouchEnd(e) {
+        e.preventDefault();
+        if (!this.touchData) return;
+        
+        const touch = e.changedTouches[0];
+        const element = this.touchData.element;
+        
+        // Encontrar slot sob o dedo
+        element.style.display = 'none';
+        const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
+        element.style.display = '';
+        
+        element.classList.remove('dragging');
+        element.style.position = '';
+        element.style.zIndex = '';
+        element.style.opacity = '';
+        element.style.left = '';
+        element.style.top = '';
+        element.style.transform = '';
+        
+        if (elementBelow && elementBelow.classList.contains('letter-slot')) {
+            const slot = elementBelow;
+            const slotIndex = parseInt(slot.dataset.index);
+            
+            if (this.touchData.letter === slot.dataset.letter && !this.wordSlots[slotIndex].filled) {
+                slot.textContent = this.touchData.letter;
+                slot.classList.add('filled');
+                this.wordSlots[slotIndex].filled = true;
+                
+                element.classList.add('used');
+                element.draggable = false;
+                element.style.pointerEvents = 'none';
+                
+                this.playClickSound();
+                this.checkWordComplete();
+            } else {
+                this.consecutiveErrors++;
+                this.playErrorFeedback();
+            }
+        }
+        
+        this.touchData = null;
+    }
+
+    moveTouchElement(x, y) {
+        if (!this.touchData) return;
+        
+        const element = this.touchData.element;
+        element.style.left = (x - element.offsetWidth / 2) + 'px';
+        element.style.top = (y - element.offsetHeight / 2) + 'px';
     }
 
     checkWordComplete() {
