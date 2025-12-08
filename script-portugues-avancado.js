@@ -610,8 +610,8 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         
-        if (session.age < 15 || session.age > 18) {
-            alert('Este jogo é destinado para estudantes de 15 a 18 anos. Você será redirecionado para a página inicial.');
+        if (session.age < 15) {
+            alert('Este jogo é destinado para estudantes a partir de 15 anos. Você será redirecionado para a página inicial.');
             window.location.href = 'index.html';
             return;
         }
