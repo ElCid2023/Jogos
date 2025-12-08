@@ -10,6 +10,7 @@ class AlphabetGame {
             words: false
         };
         this.consecutiveErrors = 0;
+        this.hasPlayedWelcome = false;
         
         this.phases = [
             { word: 'SOL', emoji: '☀️', letters: ['S', 'O', 'L'] },
@@ -79,7 +80,14 @@ class AlphabetGame {
         this.createAlphabetGrid();
         this.updateDisplay();
         this.bindEvents();
-        this.playWelcomeSound();
+        
+        // Tocar áudio após primeira interação (Opera)
+        document.addEventListener('click', () => {
+            if (!this.hasPlayedWelcome) {
+                this.hasPlayedWelcome = true;
+                this.playWelcomeSound();
+            }
+        }, { once: true });
     }
 
     createAlphabetGrid() {
@@ -167,14 +175,12 @@ class AlphabetGame {
 
     playWelcomeSound() {
         if ('speechSynthesis' in window) {
-            setTimeout(() => {
-                const utterance = new SpeechSynthesisUtterance();
-                utterance.text = 'Bem-vindos ao jogo do alfabeto! Cliquem nas letras para ouvir como elas aparecem nas palavras!';
-                utterance.lang = 'pt-BR';
-                utterance.rate = 0.9;
-                utterance.pitch = 1.1;
-                speechSynthesis.speak(utterance);
-            }, 1000);
+            const utterance = new SpeechSynthesisUtterance();
+            utterance.text = 'Clique nas letras para ouvir e aprender!';
+            utterance.lang = 'pt-BR';
+            utterance.rate = 0.9;
+            utterance.pitch = 1.1;
+            speechSynthesis.speak(utterance);
         }
     }
 
@@ -547,5 +553,27 @@ class AlphabetGame {
 
 // Inicializar o jogo quando a página carregar
 document.addEventListener('DOMContentLoaded', () => {
-    new AlphabetGame();
+    // Verificar acesso por idade
+    try {
+        const session = JSON.parse(localStorage.getItem('edugames_session') || '{}');
+        
+        if (!session.age || session.age < 7 || session.age > 10) {
+            alert('Este jogo é destinado para crianças de 7 a 10 anos. Você será redirecionado para a página inicial.');
+            window.location.href = '../index.html';
+            return;
+        }
+        
+        // Verificar se a sessão não expirou (24 horas)
+        if (Date.now() - session.timestamp > 24 * 60 * 60 * 1000) {
+            alert('Sua sessão expirou. Faça login novamente.');
+            window.location.href = '../index.html';
+            return;
+        }
+        
+        new AlphabetGame();
+    } catch (error) {
+        console.error('Erro ao verificar sessão:', error);
+        alert('Erro de acesso. Você será redirecionado para a página inicial.');
+        window.location.href = '../index.html';
+    }
 });
