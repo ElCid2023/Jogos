@@ -6,6 +6,7 @@ class AlphabetGame {
         this.score = 0;
         this.wordSlots = [];
         this.touchData = null;
+        this.autoAdvanceTimer = null;
         this.hasPlayedInstructions = {
             letters: false,
             words: false
@@ -256,6 +257,12 @@ class AlphabetGame {
     }
 
     startWordGame() {
+        // Cancelar timer de avanço automático se existir
+        if (this.autoAdvanceTimer) {
+            clearTimeout(this.autoAdvanceTimer);
+            this.autoAdvanceTimer = null;
+        }
+        
         const phase = this.phases[this.currentPhase];
         document.getElementById('word-image').textContent = phase.emoji;
         document.getElementById('word-hint').textContent = phase.word;
@@ -481,8 +488,13 @@ class AlphabetGame {
                 document.querySelector('.target-word').style.transform = 'scale(1)';
             }, 500);
             
+            // Cancelar timer anterior se existir
+            if (this.autoAdvanceTimer) {
+                clearTimeout(this.autoAdvanceTimer);
+            }
+            
             // Avançar automaticamente após 2 segundos
-            setTimeout(() => {
+            this.autoAdvanceTimer = setTimeout(() => {
                 this.nextPhase();
             }, 2000);
         }
