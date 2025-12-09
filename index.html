@@ -198,12 +198,14 @@
                     <div class="game-icon">🔤</div>
                     <div class="game-title">Jogo do Alfabeto</div>
                     <div class="game-description">Aprenda as letras do alfabeto com sons e imagens divertidas!</div>
+                    <div style="background: #4caf50; color: white; padding: 5px 10px; border-radius: 15px; margin-top: 10px; font-size: 0.9em;">✓ GRATUITO</div>
                 </a>
                 
                 <a href="jogo-numeros/index.html" class="game-card">
                     <div class="game-icon">🔢</div>
                     <div class="game-title">Jogo de Números</div>
                     <div class="game-description">Descubra os números e pratique matemática de forma divertida!</div>
+                    <div style="background: #4caf50; color: white; padding: 5px 10px; border-radius: 15px; margin-top: 10px; font-size: 0.9em;">✓ GRATUITO</div>
                 </a>
             </div>
         </div>
@@ -218,18 +220,21 @@
                     <div class="game-icon">📖</div>
                     <div class="game-title">Gramática Básica</div>
                     <div class="game-description">Morfologia, sintaxe e análise de orações!</div>
+                    <div style="background: #4caf50; color: white; padding: 5px 10px; border-radius: 15px; margin-top: 10px; font-size: 0.9em;">✓ GRATUITO</div>
                 </a>
                 
-                <a href="jogo-numeros-expandido.html" class="game-card">
+                <a href="#" onclick="premiumControl.blockPremiumGame('Matemática Intermediária'); return false;" class="game-card" style="opacity: 0.8;">
                     <div class="game-icon">🔢</div>
-                    <div class="game-title">Matemática Intermediária</div>
+                    <div class="game-title">Matemática Intermediária 🔒</div>
                     <div class="game-description">Frações, equações e geometria!</div>
+                    <div style="background: #ff6b35; color: white; padding: 5px 10px; border-radius: 15px; margin-top: 10px; font-size: 0.9em;">⭐ PREMIUM</div>
                 </a>
                 
-                <a href="jogo-calculos/index.html" class="game-card">
+                <a href="#" onclick="premiumControl.blockPremiumGame('Cálculos Avançados'); return false;" class="game-card" style="opacity: 0.8;">
                     <div class="game-icon">🧮</div>
-                    <div class="game-title">Cálculos Avançados</div>
+                    <div class="game-title">Cálculos Avançados 🔒</div>
                     <div class="game-description">Matemática com sistema de notas!</div>
+                    <div style="background: #ff6b35; color: white; padding: 5px 10px; border-radius: 15px; margin-top: 10px; font-size: 0.9em;">⭐ PREMIUM</div>
                 </a>
             </div>
         </div>
@@ -240,16 +245,18 @@
             <button onclick="clearSession(); location.reload();" class="back-btn" style="margin-bottom: 20px;">Sair</button>
             
             <div class="games-grid">
-                <a href="jogo-portugues-avancado.html" class="game-card">
+                <a href="#" onclick="premiumControl.blockPremiumGame('Português Avançado'); return false;" class="game-card" style="opacity: 0.8;">
                     <div class="game-icon">📚</div>
-                    <div class="game-title">Português Avançado</div>
+                    <div class="game-title">Português Avançado 🔒</div>
                     <div class="game-description">Literatura, redação e interpretação de textos!</div>
+                    <div style="background: #ff6b35; color: white; padding: 5px 10px; border-radius: 15px; margin-top: 10px; font-size: 0.9em;">⭐ PREMIUM</div>
                 </a>
                 
-                <a href="jogo-numeros-expandido.html" class="game-card">
+                <a href="#" onclick="premiumControl.blockPremiumGame('Matemática Ensino Médio'); return false;" class="game-card" style="opacity: 0.8;">
                     <div class="game-icon">🧮</div>
-                    <div class="game-title">Matemática Ensino Médio</div>
+                    <div class="game-title">Matemática Ensino Médio 🔒</div>
                     <div class="game-description">Funções, fórmulas e matemática financeira!</div>
+                    <div style="background: #ff6b35; color: white; padding: 5px 10px; border-radius: 15px; margin-top: 10px; font-size: 0.9em;">⭐ PREMIUM</div>
                 </a>
             </div>
         </div>
@@ -262,6 +269,9 @@
         </div>
     </div>
 
+    <!-- Controle de Versão Premium -->
+    <script src="premium-control.js"></script>
+    
     <script>
         // Funções de segurança simplificadas
         function validateName(name) {
