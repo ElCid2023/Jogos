@@ -8,7 +8,7 @@ class PremiumControl {
         this.isPremium = this.checkPremiumStatus();
         this.freeGames = ['alfabeto', 'numeros', 'gramatica']; // Jogos gratuitos
         this.premiumGames = ['calculos', 'matematica-expandido', 'portugues-avancado', 'numeros-expandido']; // Jogos premium
-        this.hotmartLink = 'https://pay.hotmart.com/XXXXXXXX'; // SUBSTITUA pelo seu link
+        this.hotmartLink = 'https://pay.hotmart.com/F103352336V'; // SUBSTITUA pelo seu link
     }
 
     // Verificar se usuário tem versão premium
