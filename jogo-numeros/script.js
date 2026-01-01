@@ -81,12 +81,15 @@ class NumbersGame {
         let visual = '';
         const color = colors[Math.floor(num / 5) % colors.length];
         
-        for (let i = 0; i < Math.min(num, 15); i++) {
+        // Mostrar todos os blocos até 20, depois usar representação compacta
+        const maxVisual = Math.min(num, 20);
+        
+        for (let i = 0; i < maxVisual; i++) {
             visual += color;
             if ((i + 1) % 5 === 0) visual += ' ';
         }
         
-        if (num > 15) visual += ` +${num - 15}`;
+        if (num > 20) visual += ` +${num - 20}`;
         return visual;
     }
 
@@ -180,8 +183,9 @@ class NumbersGame {
     }
 
     createMathVisual(num1, num2, operation) {
-        const visual1 = this.createVisual(Math.min(num1, 10));
-        const visual2 = this.createVisual(Math.min(num2, 10));
+        // Para matemática, mostrar sempre todos os blocos até 20
+        const visual1 = this.createVisual(num1);
+        const visual2 = this.createVisual(num2);
         const symbol = operation === '+' ? ' + ' : ' - ';
         return visual1 + symbol + visual2 + ' = ?';
     }
