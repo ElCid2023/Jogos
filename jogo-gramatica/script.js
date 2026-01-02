@@ -571,11 +571,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         
-        if (session.age < 10 || session.age > 14) {
-            alert('Este jogo é destinado para estudantes de 10 a 14 anos. Você será redirecionado para a página inicial.');
-            window.location.href = '../index.html';
-            return;
-        }
+        // Removi verificação de idade - todos podem jogar
         
         if (Date.now() - session.timestamp > 24 * 60 * 60 * 1000) {
             alert('Sua sessão expirou. Faça login novamente.');
