@@ -91,7 +91,7 @@ class PremiumControl {
                     </ul>
                 </div>
                 <div style="font-size: 2em; color: #ff6b35; font-weight: bold; margin: 20px 0;">
-                    Apenas R$ 19,90
+                    Apenas R$ 4,99
                 </div>
                 <button onclick="window.open('${this.hotmartLink}', '_blank')" style="
                     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
