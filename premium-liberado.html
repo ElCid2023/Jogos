@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduGames Brasil - Premium Liberado!</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 50px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+        .container { max-width: 600px; margin: 0 auto; background: rgba(255,255,255,0.1); padding: 40px; border-radius: 15px; backdrop-filter: blur(10px); }
+        h1 { font-size: 2.5em; margin-bottom: 20px; }
+        .btn { background: #4CAF50; color: white; padding: 20px 40px; text-decoration: none; border-radius: 50px; font-size: 20px; display: inline-block; margin: 30px 0; transition: all 0.3s; }
+        .btn:hover { background: #45a049; transform: scale(1.05); }
+        .success { font-size: 1.2em; margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎉 PREMIUM LIBERADO!</h1>
+        <div class="success">
+            <p>✅ Pagamento confirmado com sucesso!</p>
+            <p>✅ Acesso premium ativado automaticamente!</p>
+            <p>✅ Todos os jogos liberados!</p>
+        </div>
+        <a href="index.html" class="btn">🎮 JOGAR AGORA</a>
+        <p><strong>Seu acesso é vitalício e nunca expira!</strong></p>
+    </div>
+    
+    <script>
+        // Libera acesso premium
+        localStorage.setItem('edugames_premium', 'true');
+        localStorage.setItem('edugames_user_paid', 'true');
+        localStorage.setItem('premium_activated_date', new Date().toISOString());
+        
+        // Redireciona automaticamente após 3 segundos
+        setTimeout(() => {
+            window.location.href = 'index.html';
+        }, 3000);
+    </script>
+</body>
+</html>
