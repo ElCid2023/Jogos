@@ -8,12 +8,15 @@ class PremiumControl {
         this.isPremium = this.checkPremiumStatus();
         this.freeGames = ['alfabeto', 'numeros', 'gramatica']; // Jogos gratuitos
         this.premiumGames = ['calculos', 'matematica-expandido', 'portugues-avancado', 'numeros-expandido']; // Jogos premium
-        this.hotmartLink = 'https://pay.hotmart.com/F103352336V'; // SUBSTITUA pelo seu link
+        this.hotmartLink = 'https://pay.hotmart.com/XXXXXXXX'; // SUBSTITUA pelo seu link
     }
 
     // Verificar se usuário tem versão premium
     checkPremiumStatus() {
-        return localStorage.getItem('edugames_premium') === 'true';
+        // Verificar múltiplas chaves para compatibilidade
+        return localStorage.getItem('edugames_premium') === 'true' || 
+               localStorage.getItem('edugames_user_paid') === 'true' ||
+               localStorage.getItem('premium_activated') === 'true';
     }
 
     // Ativar versão premium (após compra)
@@ -91,7 +94,7 @@ class PremiumControl {
                     </ul>
                 </div>
                 <div style="font-size: 2em; color: #ff6b35; font-weight: bold; margin: 20px 0;">
-                    Apenas R$ 4,99
+                    Apenas R$ 19,90
                 </div>
                 <button onclick="window.open('${this.hotmartLink}', '_blank')" style="
                     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
