@@ -392,49 +392,18 @@
         
         function showGamesForAge(age, name) {
             try {
+                // Parar qualquer áudio anterior
+                speechSynthesis.cancel();
                 
                 if (age >= 7 && age <= 10) {
                     document.getElementById('games-7-10').classList.remove('hidden');
                     document.getElementById('player-name-7-10').textContent = name;
-                    
-                    if ('speechSynthesis' in window) {
-                        setTimeout(() => {
-                            const utterance = new SpeechSynthesisUtterance();
-                            utterance.text = `Perfeito, ${name}! Vamos aprender o alfabeto e números de forma divertida!`;
-                            utterance.lang = 'pt-BR';
-                            utterance.rate = 0.9;
-                            utterance.pitch = 1.1;
-                            speechSynthesis.speak(utterance);
-                        }, 300);
-                    }
                 } else if (age >= 10 && age <= 14) {
                     document.getElementById('games-10-14').classList.remove('hidden');
                     document.getElementById('player-name-10-14').textContent = name;
-                    
-                    if ('speechSynthesis' in window) {
-                        setTimeout(() => {
-                            const utterance = new SpeechSynthesisUtterance();
-                            utterance.text = `Excelente, ${name}! Vamos estudar gramática e matemática avançada!`;
-                            utterance.lang = 'pt-BR';
-                            utterance.rate = 0.9;
-                            utterance.pitch = 1.1;
-                            speechSynthesis.speak(utterance);
-                        }, 300);
-                    }
                 } else if (age >= 15) {
                     document.getElementById('games-15-18').classList.remove('hidden');
                     document.getElementById('player-name-15-18').textContent = name;
-                    
-                    if ('speechSynthesis' in window) {
-                        setTimeout(() => {
-                            const utterance = new SpeechSynthesisUtterance();
-                            utterance.text = `Ótimo, ${name}! Aqui você encontra conteúdo de ensino médio para estudar ou revisar!`;
-                            utterance.lang = 'pt-BR';
-                            utterance.rate = 0.9;
-                            utterance.pitch = 1.1;
-                            speechSynthesis.speak(utterance);
-                        }, 300);
-                    }
                 }
             } catch (error) {
                 console.error('Erro ao mostrar jogos:', error);
