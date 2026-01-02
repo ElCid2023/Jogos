@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Teste Premium - EduGames Brasil</title>
+</head>
+<body style="font-family: Arial; padding: 50px; text-align: center;">
+    <h1>🔍 Teste de Status Premium</h1>
+    <div id="status"></div>
+    <button onclick="ativarPremium()">Ativar Premium Manualmente</button>
+    <button onclick="verificarStatus()">Verificar Status</button>
+    
+    <script>
+        function verificarStatus() {
+            const premium = localStorage.getItem('edugames_premium');
+            const paid = localStorage.getItem('edugames_user_paid');
+            
+            document.getElementById('status').innerHTML = `
+                <h2>Status Atual:</h2>
+                <p>Premium: ${premium || 'false'}</p>
+                <p>Paid: ${paid || 'false'}</p>
+                <p>Data: ${localStorage.getItem('premium_activated_date') || 'Não definida'}</p>
+            `;
+        }
+        
+        function ativarPremium() {
+            localStorage.setItem('edugames_premium', 'true');
+            localStorage.setItem('edugames_user_paid', 'true');
+            localStorage.setItem('premium_activated_date', new Date().toISOString());
+            alert('Premium ativado!');
+            verificarStatus();
+        }
+        
+        // Verificar automaticamente
+        verificarStatus();
+    </script>
+</body>
+</html>
