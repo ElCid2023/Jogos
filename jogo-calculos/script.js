@@ -470,6 +470,11 @@ class CalculusGame {
 // Inicializar o jogo
 document.addEventListener('DOMContentLoaded', () => {
     try {
+        // Verificar premium PRIMEIRO (se já foi verificado no HTML, pula)
+        if (window.premiumControl && !window.premiumControl.canAccessGame('calculos')) {
+            return; // Bloqueado pelo HTML
+        }
+        
         const session = JSON.parse(localStorage.getItem('edugames_session') || '{}');
         
         if (!session.age) {
