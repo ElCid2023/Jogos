@@ -139,6 +139,35 @@
             window.location.href = 'index.html';
         }
     </script>
+    <!-- Controle Premium -->
+    <script src="premium-control.js"></script>
+    <script>
+        // Verificar acesso premium antes de carregar o jogo
+        document.addEventListener('DOMContentLoaded', () => {
+            try {
+                // Verificar se usuário tem premium
+                const isPremium = window.premiumControl && window.premiumControl.isPremium;
+                
+                if (!isPremium || !window.premiumControl.canAccessGame('matematica-expandido')) {
+                    // Bloquear acesso - mostrar modal premium
+                    if (window.premiumControl) {
+                        window.premiumControl.blockPremiumGame('Matemática Expandida');
+                    } else {
+                        alert('Este jogo está disponível apenas na versão Premium!\n\nUpgrade agora por apenas R$ 4,99');
+                    }
+                    // Redirecionar após 3 segundos
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 3000);
+                    return;
+                }
+            } catch (error) {
+                console.error('Erro ao verificar premium:', error);
+                alert('Erro ao verificar acesso premium.');
+                window.location.href = 'index.html';
+            }
+        });
+    </script>
     <script src="script-matematica-expandido.js"></script>
 </body>
 </html>
