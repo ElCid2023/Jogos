@@ -223,18 +223,18 @@
                     <div style="background: #4caf50; color: white; padding: 5px 10px; border-radius: 15px; margin-top: 10px; font-size: 0.9em;">✓ GRATUITO</div>
                 </a>
                 
-                <a href="jogo-calculos/index.html" class="game-card" id="matematica-intermediaria">
+                <a href="#" class="game-card premium-game" data-game-id="calculos" data-game-name="Cálculos Intermediários" data-game-url="jogo-calculos/index.html">
                     <div class="game-icon">🔢</div>
                     <div class="game-title">Cálculos Intermediários</div>
                     <div class="game-description">Frações, equações e geometria básica!</div>
-                    <div style="background: #4caf50; color: white; padding: 5px 10px; border-radius: 15px; margin-top: 10px; font-size: 0.9em;">✓ GRATUITO</div>
+                    <div class="premium-badge" style="background: #ff6b35; color: white; padding: 5px 10px; border-radius: 15px; margin-top: 10px; font-size: 0.9em;">🔒 PREMIUM</div>
                 </a>
                 
-                <a href="jogo-numeros-expandido.html" class="game-card" id="matematica-expandida-10-14">
+                <a href="#" class="game-card premium-game" data-game-id="matematica-expandido" data-game-name="Matemática Expandida" data-game-url="jogo-numeros-expandido.html">
                     <div class="game-icon">🧮</div>
                     <div class="game-title">Matemática Expandida</div>
                     <div class="game-description">Frações avançadas, equações e geometria completa!</div>
-                    <div style="background: #4caf50; color: white; padding: 5px 10px; border-radius: 15px; margin-top: 10px; font-size: 0.9em;">✓ LIBERADO</div>
+                    <div class="premium-badge" style="background: #ff6b35; color: white; padding: 5px 10px; border-radius: 15px; margin-top: 10px; font-size: 0.9em;">🔒 PREMIUM</div>
                 </a>
             </div>
         </div>
@@ -245,18 +245,18 @@
             <button onclick="clearSession(); location.reload();" class="back-btn" style="margin-bottom: 20px;">Sair</button>
             
             <div class="games-grid">
-                <a href="jogo-portugues-avancado.html" class="game-card" id="portugues-avancado">
+                <a href="#" class="game-card premium-game" data-game-id="portugues-avancado" data-game-name="Português Avançado" data-game-url="jogo-portugues-avancado.html">
                     <div class="game-icon">📚</div>
                     <div class="game-title">Português Avançado</div>
                     <div class="game-description">Literatura, redação e interpretação de textos!</div>
-                    <div style="background: #4caf50; color: white; padding: 5px 10px; border-radius: 15px; margin-top: 10px; font-size: 0.9em;">✓ LIBERADO</div>
+                    <div class="premium-badge" style="background: #ff6b35; color: white; padding: 5px 10px; border-radius: 15px; margin-top: 10px; font-size: 0.9em;">🔒 PREMIUM</div>
                 </a>
                 
-                <a href="jogo-numeros-expandido.html" class="game-card" id="matematica-ensino-medio">
+                <a href="#" class="game-card premium-game" data-game-id="matematica-expandido" data-game-name="Matemática Ensino Médio" data-game-url="jogo-numeros-expandido.html">
                     <div class="game-icon">🧮</div>
                     <div class="game-title">Matemática Ensino Médio</div>
                     <div class="game-description">Funções, fórmulas e matemática financeira!</div>
-                    <div style="background: #4caf50; color: white; padding: 5px 10px; border-radius: 15px; margin-top: 10px; font-size: 0.9em;">✓ LIBERADO</div>
+                    <div class="premium-badge" style="background: #ff6b35; color: white; padding: 5px 10px; border-radius: 15px; margin-top: 10px; font-size: 0.9em;">🔒 PREMIUM</div>
                 </a>
             </div>
         </div>
@@ -401,14 +401,54 @@
                 } else if (age >= 10 && age <= 14) {
                     document.getElementById('games-10-14').classList.remove('hidden');
                     document.getElementById('player-name-10-14').textContent = name;
+                    // Configurar jogos premium para 10-14 anos
+                    setupPremiumGames();
                 } else if (age >= 15) {
                     document.getElementById('games-15-18').classList.remove('hidden');
                     document.getElementById('player-name-15-18').textContent = name;
+                    // Configurar jogos premium para 15+ anos
+                    setupPremiumGames();
                 }
             } catch (error) {
                 console.error('Erro ao mostrar jogos:', error);
                 alert('Erro ao carregar jogos. Recarregue a página.');
             }
+        }
+        
+        function setupPremiumGames() {
+            // Verificar status premium
+            const isPremium = window.premiumControl && window.premiumControl.isPremium;
+            
+            // Adicionar event listeners aos jogos premium
+            document.querySelectorAll('.premium-game').forEach(card => {
+                const gameId = card.getAttribute('data-game-id');
+                const gameName = card.getAttribute('data-game-name');
+                const gameUrl = card.getAttribute('data-game-url');
+                
+                if (isPremium && window.premiumControl.canAccessGame(gameId)) {
+                    // Usuário premium - permitir acesso direto
+                    card.href = gameUrl;
+                    card.style.opacity = '1';
+                    card.style.cursor = 'pointer';
+                    const badge = card.querySelector('.premium-badge');
+                    if (badge) {
+                        badge.style.background = '#4caf50';
+                        badge.textContent = '✓ PREMIUM LIBERADO';
+                    }
+                } else {
+                    // Usuário não premium - bloquear acesso
+                    card.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        if (window.premiumControl) {
+                            window.premiumControl.blockPremiumGame(gameName);
+                        } else {
+                            alert(`O jogo "${gameName}" está disponível apenas na versão Premium!\n\nUpgrade agora por apenas R$ 4,99`);
+                        }
+                    });
+                    card.style.cursor = 'not-allowed';
+                    card.style.opacity = '0.8';
+                }
+            });
         }
         
         document.addEventListener('DOMContentLoaded', () => {
@@ -465,6 +505,14 @@
                     }
                 });
                 
+                // Aguardar premium-control.js carregar antes de configurar jogos
+                if (document.readyState === 'loading') {
+                    window.addEventListener('DOMContentLoaded', () => {
+                        setTimeout(setupPremiumGames, 100);
+                    });
+                } else {
+                    setTimeout(setupPremiumGames, 100);
+                }
 
             } catch (error) {
                 console.error('Erro na inicialização:', error);

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduGames Brasil - Acesso Premium Liberado!</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            text-align: center; 
+            padding: 50px; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container { 
+            max-width: 600px; 
+            margin: 0 auto; 
+            background: white; 
+            padding: 40px; 
+            border-radius: 20px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        h1 { 
+            color: #4CAF50; 
+            margin-bottom: 20px;
+            font-size: 2.5em;
+        }
+        .success-icon {
+            font-size: 5em;
+            margin-bottom: 20px;
+        }
+        .btn { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white; 
+            padding: 15px 40px; 
+            text-decoration: none; 
+            border-radius: 25px; 
+            font-size: 1.2em; 
+            display: inline-block; 
+            margin: 20px 0;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(102,126,234,0.4);
+            transition: transform 0.3s ease;
+        }
+        .btn:hover { 
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102,126,234,0.6);
+        }
+        .premium-badge {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #333;
+            padding: 10px 20px;
+            border-radius: 20px;
+            display: inline-block;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+        .features {
+            text-align: left;
+            margin: 30px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 10px;
+        }
+        .features li {
+            margin: 10px 0;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="success-icon">✅</div>
+        <h1>🎉 Parabéns!</h1>
+        <h2 style="color: #667eea;">Seu acesso Premium foi liberado!</h2>
+        <p style="font-size: 1.1em; color: #666; margin: 20px 0;">
+            Obrigado pela sua compra! Agora você tem acesso completo a todos os jogos do EduGames Brasil.
+        </p>
+        
+        <div class="premium-badge">⭐ PREMIUM ATIVO ⭐</div>
+        
+        <div class="features">
+            <h3 style="color: #667eea; margin-bottom: 15px;">✨ Seu acesso Premium inclui:</h3>
+            <ul style="list-style: none; padding: 0;">
+                <li>✅ <strong>7 jogos completos</strong></li>
+                <li>✅ <strong>Todos os níveis desbloqueados</strong></li>
+                <li>✅ <strong>Relatórios de desempenho</strong></li>
+                <li>✅ <strong>Sem anúncios</strong></li>
+                <li>✅ <strong>Atualizações gratuitas</strong></li>
+                <li>✅ <strong>Acesso permanente</strong></li>
+            </ul>
+        </div>
+        
+        <a href="index.html" class="btn">🎮 JOGAR AGORA</a>
+        
+        <p style="margin-top: 30px; color: #666; font-size: 0.9em;">
+            <strong>Seu acesso premium está ativo e nunca expira!</strong><br>
+            Você pode jogar quantas vezes quiser.
+        </p>
+    </div>
+    
+    <script src="premium-control.js"></script>
+    <script>
+        // Ativar premium de múltiplas formas para garantir
+        try {
+            localStorage.setItem('edugames_premium', 'true');
+            localStorage.setItem('edugames_user_paid', 'true');
+            localStorage.setItem('premium_activated', 'true');
+            localStorage.setItem('edugames_activation_date', Date.now());
+            localStorage.setItem('edugames_activated', new Date().toISOString());
+            
+            // Se premiumControl estiver disponível, atualizar status
+            if (window.premiumControl) {
+                window.premiumControl.isPremium = true;
+            }
+            
+            console.log('✅ Acesso premium liberado com sucesso!');
+            console.log('Premium status:', localStorage.getItem('edugames_premium'));
+            
+            // Mostrar confirmação visual
+            setTimeout(() => {
+                const container = document.querySelector('.container');
+                container.style.animation = 'pulse 0.5s ease-in-out';
+            }, 100);
+            
+        } catch (error) {
+            console.error('Erro ao ativar premium:', error);
+            alert('Erro ao ativar premium. Por favor, entre em contato com o suporte.');
+        }
+        
+        // Adicionar animação de pulso
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes pulse {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.02); }
+                100% { transform: scale(1); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

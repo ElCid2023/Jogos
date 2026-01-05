@@ -8,6 +8,14 @@ class PremiumControl {
         this.isPremium = this.checkPremiumStatus();
         this.freeGames = ['alfabeto', 'numeros', 'gramatica']; // Jogos gratuitos
         this.premiumGames = ['calculos', 'matematica-expandido', 'portugues-avancado', 'numeros-expandido']; // Jogos premium
+        
+        // Mapeamento de URLs para IDs de jogos
+        this.gameUrlMap = {
+            'jogo-calculos/index.html': 'calculos',
+            'jogo-calculos/': 'calculos',
+            'jogo-numeros-expandido.html': 'matematica-expandido',
+            'jogo-portugues-avancado.html': 'portugues-avancado'
+        };
         this.hotmartLink = 'https://pay.hotmart.com/XXXXXXXX'; // SUBSTITUA pelo seu link
     }
 
