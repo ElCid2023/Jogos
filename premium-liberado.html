@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduGames Brasil - Acesso Premium Liberado!</title>
+    <title>EduGames Brasil - Ativação Premium</title>
     <style>
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
@@ -14,131 +14,164 @@
             margin: 0;
         }
         .container { 
-            max-width: 600px; 
+            max-width: 500px; 
             margin: 0 auto; 
             background: white; 
             padding: 40px; 
             border-radius: 20px; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
-        h1 { 
-            color: #4CAF50; 
-            margin-bottom: 20px;
-            font-size: 2.5em;
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
         }
-        .success-icon {
-            font-size: 5em;
-            margin-bottom: 20px;
+        input { 
+            padding: 15px; 
+            font-size: 1.2em; 
+            border: 2px solid #667eea; 
+            border-radius: 10px; 
+            width: 80%;
+            margin: 20px 0;
+            text-align: center;
         }
-        .btn { 
+        button { 
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white; 
             padding: 15px 40px; 
-            text-decoration: none; 
-            border-radius: 25px; 
             font-size: 1.2em; 
-            display: inline-block; 
-            margin: 20px 0;
-            font-weight: bold;
+            border: none; 
+            border-radius: 25px; 
+            cursor: pointer;
             box-shadow: 0 5px 15px rgba(102,126,234,0.4);
             transition: transform 0.3s ease;
         }
-        .btn:hover { 
+        button:hover { 
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(102,126,234,0.6);
         }
-        .premium-badge {
-            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
-            color: #333;
-            padding: 10px 20px;
-            border-radius: 20px;
-            display: inline-block;
-            margin: 20px 0;
-            font-weight: bold;
-        }
-        .features {
-            text-align: left;
-            margin: 30px 0;
-            padding: 20px;
-            background: #f9f9f9;
-            border-radius: 10px;
-        }
-        .features li {
+        .error { 
+            color: #ff6b35; 
+            font-weight: bold; 
             margin: 10px 0;
-            font-size: 1.1em;
+            background: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .success { 
+            color: #4caf50; 
+            font-weight: bold; 
+        }
+        .icon {
+            font-size: 5em;
+            margin-bottom: 20px;
+        }
+        .link-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            text-decoration: none;
+            border-radius: 25px;
+            display: inline-block;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(102,126,234,0.4);
+            transition: transform 0.3s ease;
+        }
+        .link-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102,126,234,0.6);
+        }
+        .info {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-size: 0.9em;
+            color: #666;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="success-icon">✅</div>
-        <h1>🎉 Parabéns!</h1>
-        <h2 style="color: #667eea;">Seu acesso Premium foi liberado!</h2>
-        <p style="font-size: 1.1em; color: #666; margin: 20px 0;">
-            Obrigado pela sua compra! Agora você tem acesso completo a todos os jogos do EduGames Brasil.
-        </p>
-        
-        <div class="premium-badge">⭐ PREMIUM ATIVO ⭐</div>
-        
-        <div class="features">
-            <h3 style="color: #667eea; margin-bottom: 15px;">✨ Seu acesso Premium inclui:</h3>
-            <ul style="list-style: none; padding: 0;">
-                <li>✅ <strong>7 jogos completos</strong></li>
-                <li>✅ <strong>Todos os níveis desbloqueados</strong></li>
-                <li>✅ <strong>Relatórios de desempenho</strong></li>
-                <li>✅ <strong>Sem anúncios</strong></li>
-                <li>✅ <strong>Atualizações gratuitas</strong></li>
-                <li>✅ <strong>Acesso permanente</strong></li>
-            </ul>
+        <div id="login-form">
+            <div class="icon">🔐</div>
+            <h1>Ativação Premium</h1>
+            <p style="color: #666; font-size: 1.1em;">Digite a senha que você recebeu no arquivo ZIP:</p>
+            <input type="text" id="password" placeholder="Digite a senha aqui" autocomplete="off" />
+            <br>
+            <button onclick="validatePassword()">🚀 Ativar Premium</button>
+            <div id="message"></div>
+            
+            <div class="info">
+                <strong>💡 Dica:</strong> A senha está no arquivo <strong>ACESSO-PREMIUM.txt</strong> que você baixou da Hotmart.
+            </div>
         </div>
         
-        <a href="index.html" class="btn">🎮 JOGAR AGORA</a>
-        
-        <p style="margin-top: 30px; color: #666; font-size: 0.9em;">
-            <strong>Seu acesso premium está ativo e nunca expira!</strong><br>
-            Você pode jogar quantas vezes quiser.
-        </p>
+        <div id="success-message" style="display: none;">
+            <div class="icon">✅</div>
+            <h1 class="success">🎉 Premium Ativado!</h1>
+            <p style="font-size: 1.2em; color: #666;">Seu acesso foi liberado com sucesso!</p>
+            
+            <div style="background: #d4edda; padding: 20px; border-radius: 10px; margin: 20px 0;">
+                <h3 style="color: #28a745; margin-top: 0;">✨ Você agora tem acesso a:</h3>
+                <ul style="list-style: none; padding: 0; text-align: left;">
+                    <li style="margin: 10px 0;">✅ <strong>7 jogos completos</strong></li>
+                    <li style="margin: 10px 0;">✅ <strong>Todos os níveis desbloqueados</strong></li>
+                    <li style="margin: 10px 0;">✅ <strong>Conteúdo para 7 a 18 anos</strong></li>
+                    <li style="margin: 10px 0;">✅ <strong>Acesso vitalício</strong></li>
+                    <li style="margin: 10px 0;">✅ <strong>Sem mensalidades</strong></li>
+                </ul>
+            </div>
+            
+            <a href="index.html" class="link-btn">🎮 Jogar Agora</a>
+            
+            <p style="margin-top: 30px; color: #999; font-size: 0.9em;">
+                Seu acesso premium está ativo e nunca expira!
+            </p>
+        </div>
     </div>
     
-    <script src="premium-control.js"></script>
     <script>
-        // Ativar premium de múltiplas formas para garantir
-        try {
-            localStorage.setItem('edugames_premium', 'true');
-            localStorage.setItem('edugames_user_paid', 'true');
-            localStorage.setItem('premium_activated', 'true');
-            localStorage.setItem('edugames_activation_date', Date.now());
-            localStorage.setItem('edugames_activated', new Date().toISOString());
+        // Senha de ativação premium
+        const SENHA_CORRETA = "EDUGAMES2025";
+        
+        function validatePassword() {
+            const senha = document.getElementById('password').value.trim().toUpperCase();
+            const message = document.getElementById('message');
             
-            // Se premiumControl estiver disponível, atualizar status
-            if (window.premiumControl) {
-                window.premiumControl.isPremium = true;
+            if (!senha) {
+                message.innerHTML = '<p class="error">⚠️ Por favor, digite a senha!</p>';
+                return;
             }
             
-            console.log('✅ Acesso premium liberado com sucesso!');
-            console.log('Premium status:', localStorage.getItem('edugames_premium'));
-            
-            // Mostrar confirmação visual
-            setTimeout(() => {
-                const container = document.querySelector('.container');
-                container.style.animation = 'pulse 0.5s ease-in-out';
-            }, 100);
-            
-        } catch (error) {
-            console.error('Erro ao ativar premium:', error);
-            alert('Erro ao ativar premium. Por favor, entre em contato com o suporte.');
+            if (senha === SENHA_CORRETA) {
+                // Senha correta - ativar premium
+                localStorage.setItem('edugames_premium', 'true');
+                localStorage.setItem('edugames_user_paid', 'true');
+                localStorage.setItem('premium_activated', 'true');
+                localStorage.setItem('edugames_activation_date', Date.now());
+                
+                // Mostrar mensagem de sucesso
+                document.getElementById('login-form').style.display = 'none';
+                document.getElementById('success-message').style.display = 'block';
+                
+                console.log('✅ Premium ativado com sucesso!');
+            } else {
+                // Senha incorreta
+                message.innerHTML = '<p class="error">❌ Senha incorreta! Verifique o arquivo ACESSO-PREMIUM.txt que você baixou.</p>';
+                document.getElementById('password').value = '';
+                document.getElementById('password').focus();
+            }
         }
         
-        // Adicionar animação de pulso
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes pulse {
-                0% { transform: scale(1); }
-                50% { transform: scale(1.02); }
-                100% { transform: scale(1); }
-            }
-        `;
-        document.head.appendChild(style);
+        // Permitir Enter para enviar
+        document.getElementById('password').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') validatePassword();
+        });
+        
+        // Focar no campo ao carregar
+        window.onload = function() {
+            document.getElementById('password').focus();
+        };
     </script>
 </body>
 </html>
