@@ -16,7 +16,7 @@ class PremiumControl {
             'jogo-numeros-expandido.html': 'matematica-expandido',
             'jogo-portugues-avancado.html': 'portugues-avancado'
         };
-        this.hotmartLink = 'https://pay.hotmart.com/XXXXXXXX'; // SUBSTITUA pelo seu link
+        this.hotmartLink = 'https://pay.hotmart.com/F103352336V?off=wfvzcm9x'; // ⚠️ IMPORTANTE: SUBSTITUA pelo seu link real da Hotmart
     }
 
     // Verificar se usuário tem versão premium
@@ -102,7 +102,7 @@ class PremiumControl {
                     </ul>
                 </div>
                 <div style="font-size: 2em; color: #ff6b35; font-weight: bold; margin: 20px 0;">
-                    Apenas R$ 4,99
+                    Apenas R$ 9,99
                 </div>
                 <button onclick="window.open('${this.hotmartLink}', '_blank')" style="
                     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -158,7 +158,7 @@ class PremiumControl {
             <div style="font-size: 2em; margin-bottom: 10px;">⭐</div>
             <h3 style="margin-bottom: 10px;">Upgrade para Premium!</h3>
             <p style="font-size: 0.9em; margin-bottom: 15px;">
-                Desbloqueie todos os jogos e recursos por apenas R$ 4,99
+                Desbloqueie todos os jogos e recursos por apenas R$ 9,99
             </p>
             <button style="
                 background: white;
