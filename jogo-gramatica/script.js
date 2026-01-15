@@ -571,7 +571,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         
-        // Removi verificação de idade - todos podem jogar
+        // Aceitar qualquer idade - jogo liberado para todos
         
         if (Date.now() - session.timestamp > 24 * 60 * 60 * 1000) {
             alert('Sua sessão expirou. Faça login novamente.');
@@ -582,7 +582,7 @@ document.addEventListener('DOMContentLoaded', () => {
         new GrammarGame();
     } catch (error) {
         console.error('Erro ao verificar sessão:', error);
-        alert('Erro de acesso. Você será redirecionado para a página inicial.');
-        window.location.href = '../index.html';
+        // Se der erro, inicializar mesmo assim
+        new GrammarGame();
     }
 });
