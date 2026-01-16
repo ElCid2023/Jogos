@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Completar Frases - Conhecimentos Gerais</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #4a5568;
+            margin-bottom: 30px;
+        }
+        
+        .instructions {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 1.1em;
+        }
+        
+        .score {
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: #4CAF50;
+        }
+        
+        .sentence-container {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border-left: 5px solid #667eea;
+        }
+        
+        .sentence {
+            font-size: 1.3em;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .blank {
+            display: inline-block;
+            min-width: 150px;
+            padding: 8px 15px;
+            margin: 0 5px;
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+        
+        .blank:hover {
+            border-color: #667eea;
+            background: #e3f2fd;
+        }
+        
+        .blank.filled {
+            background: #e8f5e8;
+            border-color: #4CAF50;
+            color: #2e7d32;
+        }
+        
+        .blank.incorrect {
+            background: #ffebee;
+            border-color: #f44336;
+            color: #c62828;
+            animation: shake 0.5s;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        
+        .options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .option {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: center;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+        
+        .option:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+        
+        .option.used {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .buttons {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.2em;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+        
+        .btn.restart {
+            background: #ff6b6b;
+        }
+        
+        .btn.restart:hover {
+            background: #ff5252;
+        }
+        
+        .final-message {
+            background: #e8f5e8;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .progress {
+            background: #e0e0e0;
+            height: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            background: #4CAF50;
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📝 Completar Frases - Matemática</h1>
+        
+        <div class="instructions">
+            <strong>Instruções:</strong> Clique nas palavras abaixo para completar as frases!
+        </div>
+        
+        <div class="score">
+            Pontuação: <span id="score">0</span> / <span id="total">6</span>
+        </div>
+        
+        <div class="progress">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        
+        <div id="sentences-container"></div>
+        
+        <div class="options" id="options-container"></div>
+        
+        <div class="final-message" id="final-message">
+            <h2>🎉 Parabéns!</h2>
+            <p id="final-text"></p>
+        </div>
+        
+        <div class="buttons">
+            <button class="btn restart" onclick="restartGame()">Reiniciar</button>
+            <button class="btn" onclick="goHome()">Voltar ao Menu</button>
+        </div>
+    </div>
+
+    <script>
+        const sentences = [
+            {
+                text: "Uma _____ representa uma parte de um todo dividido em partes iguais.",
+                correct: "Fração",
+                id: 1
+            },
+            {
+                text: "A _____ é a operação que indica quantas vezes um número cabe em outro.",
+                correct: "Divisão",
+                id: 2
+            },
+            {
+                text: "O _____ é uma figura geométrica com quatro lados iguais.",
+                correct: "Quadrado",
+                id: 3
+            },
+            {
+                text: "A _____ é uma forma de representar partes de 100.",
+                correct: "Porcentagem",
+                id: 4
+            },
+            {
+                text: "Uma _____ é uma igualdade matemática que contém uma incógnita.",
+                correct: "Equação",
+                id: 5
+            },
+            {
+                text: "O _____ é o resultado da multiplicação de dois ou mais números.",
+                correct: "Produto",
+                id: 6
+            }
+        ];
+
+        const options = [
+            "Fração", "Divisão", "Quadrado", 
+            "Porcentagem", "Equação", "Produto"
+        ];
+
+        let score = 0;
+        let totalBlanks = sentences.length;
+        let gameCompleted = false;
+        let selectedBlank = null;
+
+        function initGame() {
+            createSentences();
+            createOptions();
+            updateScore();
+        }
+
+        function createSentences() {
+            const container = document.getElementById('sentences-container');
+            container.innerHTML = '';
+            
+            sentences.forEach((sentence, index) => {
+                const sentenceDiv = document.createElement('div');
+                sentenceDiv.className = 'sentence-container';
+                
+                const sentenceText = sentence.text.replace('_____', 
+                    `<span class="blank" data-id="${sentence.id}" onclick="selectBlank(this)">_____</span>`
+                );
+                
+                sentenceDiv.innerHTML = `
+                    <div class="sentence">${sentenceText}</div>
+                `;
+                
+                container.appendChild(sentenceDiv);
+            });
+        }
+
+        function createOptions() {
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+            
+            const shuffledOptions = [...options].sort(() => Math.random() - 0.5);
+            
+            shuffledOptions.forEach(option => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'option';
+                optionDiv.textContent = option;
+                optionDiv.onclick = () => fillBlank(option, optionDiv);
+                container.appendChild(optionDiv);
+            });
+        }
+
+        function selectBlank(blankElement) {
+            document.querySelectorAll('.blank').forEach(blank => {
+                blank.style.background = blank.classList.contains('filled') ? '#e8f5e8' : 'white';
+            });
+            
+            if (!blankElement.classList.contains('filled')) {
+                selectedBlank = blankElement;
+                blankElement.style.background = '#fff3cd';
+            }
+        }
+
+        function fillBlank(optionText, optionElement) {
+            if (!selectedBlank || optionElement.classList.contains('used')) {
+                return;
+            }
+            
+            const blankId = parseInt(selectedBlank.dataset.id);
+            const correctAnswer = sentences.find(s => s.id === blankId).correct;
+            
+            if (optionText === correctAnswer) {
+                selectedBlank.textContent = optionText;
+                selectedBlank.classList.add('filled');
+                selectedBlank.style.background = '#e8f5e8';
+                optionElement.classList.add('used');
+                score++;
+                playAudio('Correto!');
+            } else {
+                selectedBlank.classList.add('incorrect');
+                setTimeout(() => {
+                    selectedBlank.classList.remove('incorrect');
+                }, 500);
+                playAudio('Tente novamente!');
+            }
+            
+            selectedBlank = null;
+            updateScore();
+            updateProgress();
+            checkGameComplete();
+        }
+
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+        }
+
+        function updateProgress() {
+            const progress = (score / totalBlanks) * 100;
+            document.getElementById('progress-bar').style.width = progress + '%';
+        }
+
+        function checkGameComplete() {
+            if (score === totalBlanks && !gameCompleted) {
+                gameCompleted = true;
+                document.getElementById('final-text').textContent = `Você completou todas as ${totalBlanks} frases corretamente!`;
+                document.getElementById('final-message').style.display = 'block';
+                playAudio('Parabéns! Você domina a matemática!');
+            }
+        }
+
+        function restartGame() {
+            score = 0;
+            gameCompleted = false;
+            selectedBlank = null;
+            
+            document.getElementById('final-message').style.display = 'none';
+            
+            initGame();
+        }
+
+        function playAudio(text) {
+            if ('speechSynthesis' in window) {
+                speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'pt-BR';
+                utterance.rate = 0.9;
+                speechSynthesis.speak(utterance);
+            }
+        }
+
+        function goHome() {
+            window.location.href = 'index.html';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initGame();
+            playAudio('Complete as frases sobre matemática!');
+        });
+    </script>
+</body>
+</html>

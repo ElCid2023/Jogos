@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo da Forca - Avançado</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        h1 { color: #4a5568; margin-bottom: 20px; }
+        .hint {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        .word-display {
+            font-size: 2.5em;
+            letter-spacing: 10px;
+            margin: 30px 0;
+            font-weight: bold;
+            color: #667eea;
+        }
+        .keyboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+            gap: 10px;
+            margin: 30px 0;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .key {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .key:hover { background: #5a6fd8; transform: translateY(-2px); }
+        .key:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .key.wrong { background: #f44336; }
+        .info {
+            font-size: 1.3em;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+        .btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.2em;
+            cursor: pointer;
+            margin: 10px;
+        }
+        .btn:hover { background: #5a6fd8; }
+        .btn-home { background: #ff6b6b; }
+        .btn-home:hover { background: #ff5252; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎪 Jogo da Forca - Literatura</h1>
+        
+        <div class="hint">Dica: <span id="hint"></span></div>
+        
+        <div class="info">
+            Erros: <span id="errors">0</span> / 6
+        </div>
+        
+        <div class="word-display" id="word-display"></div>
+        
+        <div class="keyboard" id="keyboard"></div>
+        
+        <div class="buttons">
+            <button class="btn" onclick="newGame()">🔄 Nova Palavra</button>
+            <button class="btn btn-home" onclick="goHome()">🏠 Voltar ao Menu</button>
+        </div>
+    </div>
+
+    <script>
+        const words = [
+            { word: 'ROMANTISMO', hint: 'Movimento literário do século XIX' },
+            { word: 'REALISMO', hint: 'Retrato fiel da realidade' },
+            { word: 'MODERNISMO', hint: 'Semana de Arte Moderna' },
+            { word: 'BARROCO', hint: 'Arte rebuscada e dramática' },
+            { word: 'MACHADO', hint: 'Autor de Dom Casmurro' },
+            { word: 'DRUMMOND', hint: 'Poeta modernista brasileiro' },
+            { word: 'METAFORA', hint: 'Figura de linguagem' },
+            { word: 'METONIMIA', hint: 'Substituição de palavras' },
+            { word: 'HIPERBOLE', hint: 'Exagero intencional' },
+            { word: 'SUBORDINADA', hint: 'Oração dependente' }
+        ];
+
+        let currentWord = '';
+        let currentHint = '';
+        let guessedLetters = [];
+        let errors = 0;
+        const maxErrors = 6;
+
+        function newGame() {
+            const randomIndex = Math.floor(Math.random() * words.length);
+            currentWord = words[randomIndex].word;
+            currentHint = words[randomIndex].hint;
+            guessedLetters = [];
+            errors = 0;
+            
+            document.getElementById('hint').textContent = currentHint;
+            document.getElementById('errors').textContent = errors;
+            
+            updateDisplay();
+            createKeyboard();
+        }
+
+        function updateDisplay() {
+            let display = '';
+            for (let letter of currentWord) {
+                if (guessedLetters.includes(letter)) {
+                    display += letter + ' ';
+                } else {
+                    display += '_ ';
+                }
+            }
+            document.getElementById('word-display').textContent = display.trim();
+            
+            checkWin();
+        }
+
+        function createKeyboard() {
+            const keyboard = document.getElementById('keyboard');
+            keyboard.innerHTML = '';
+            
+            const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            for (let letter of letters) {
+                const key = document.createElement('button');
+                key.className = 'key';
+                key.textContent = letter;
+                key.onclick = () => guessLetter(letter, key);
+                keyboard.appendChild(key);
+            }
+        }
+
+        function guessLetter(letter, keyElement) {
+            if (guessedLetters.includes(letter)) return;
+            
+            guessedLetters.push(letter);
+            keyElement.disabled = true;
+            
+            if (currentWord.includes(letter)) {
+                updateDisplay();
+            } else {
+                errors++;
+                keyElement.classList.add('wrong');
+                document.getElementById('errors').textContent = errors;
+                
+                if (errors >= maxErrors) {
+                    setTimeout(() => {
+                        alert(`😢 Você perdeu! A palavra era: ${currentWord}`);
+                        newGame();
+                    }, 500);
+                }
+            }
+        }
+
+        function checkWin() {
+            let won = true;
+            for (let letter of currentWord) {
+                if (!guessedLetters.includes(letter)) {
+                    won = false;
+                    break;
+                }
+            }
+            
+            if (won) {
+                setTimeout(() => {
+                    alert(`🎉 Parabéns! Você acertou a palavra: ${currentWord}`);
+                    newGame();
+                }, 500);
+            }
+        }
+
+        function goHome() {
+            window.location.href = 'index.html';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            newGame();
+        });
+    </script>
+</body>
+</html>

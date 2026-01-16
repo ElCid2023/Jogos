@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo da Memória - Literatura e História</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        
+        h1 {
+            color: #4a5568;
+            margin-bottom: 20px;
+        }
+        
+        .game-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            max-width: 600px;
+            margin: 0 auto 20px;
+        }
+        
+        .memory-card {
+            aspect-ratio: 1;
+            background: #667eea;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7em;
+            color: white;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-align: center;
+            padding: 5px;
+        }
+        
+        .memory-card:hover {
+            transform: scale(1.05);
+        }
+        
+        .memory-card.flipped {
+            background: #4CAF50;
+        }
+        
+        .memory-card.matched {
+            background: #2e7d32;
+            cursor: default;
+        }
+        
+        .home-btn, .restart-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.2em;
+            cursor: pointer;
+            margin: 10px;
+        }
+        
+        .restart-btn {
+            background: #ff6b6b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💼 Jogo da Memória - Literatura Brasileira</h1>
+        
+        <div class="game-info">
+            <span>Tentativas: <span id="attempts">0</span></span>
+            <span>Pares: <span id="pairs">0</span>/10</span>
+        </div>
+        
+        <div class="memory-grid" id="memory-grid"></div>
+        
+        <div id="game-over" style="display: none;">
+            <h2>🎉 Parabéns!</h2>
+            <p>Você completou o jogo em <span id="final-attempts"></span> tentativas!</p>
+        </div>
+        
+        <button class="restart-btn" onclick="startGame()">Novo Jogo</button>
+        <button class="home-btn" onclick="goHome()">Voltar ao Menu</button>
+    </div>
+
+    <script>
+        const cards = [
+            { id: 1, text: 'Romantismo' },
+            { id: 1, text: 'Movimento literário do século XIX' },
+            { id: 2, text: 'Realismo' },
+            { id: 2, text: 'Retrato fiel da realidade' },
+            { id: 3, text: 'Modernismo' },
+            { id: 3, text: 'Semana de Arte Moderna (1922)' },
+            { id: 4, text: 'Barroco' },
+            { id: 4, text: 'Arte rebuscada e dramática' },
+            { id: 5, text: 'Machado de Assis' },
+            { id: 5, text: 'Dom Casmurro, Memórias Póstumas' },
+            { id: 6, text: 'Clarice Lispector' },
+            { id: 6, text: 'A Hora da Estrela' },
+            { id: 7, text: 'Carlos Drummond' },
+            { id: 7, text: 'Poeta modernista brasileiro' },
+            { id: 8, text: 'Guimarães Rosa' },
+            { id: 8, text: 'Grande Sertão: Veredas' },
+            { id: 9, text: 'Figuras de Linguagem' },
+            { id: 9, text: 'Metáfora, Metonimia, Hipérbole' },
+            { id: 10, text: 'Oração Subordinada' },
+            { id: 10, text: 'Depende de outra oração' }
+        ];
+
+        let flippedCards = [];
+        let matchedPairs = 0;
+        let attempts = 0;
+        let gameCards = [];
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function startGame() {
+            gameCards = shuffle([...cards]);
+            flippedCards = [];
+            matchedPairs = 0;
+            attempts = 0;
+            
+            document.getElementById('attempts').textContent = attempts;
+            document.getElementById('pairs').textContent = matchedPairs;
+            document.getElementById('game-over').style.display = 'none';
+            
+            const grid = document.getElementById('memory-grid');
+            grid.innerHTML = '';
+            
+            gameCards.forEach((card, index) => {
+                const cardElement = document.createElement('div');
+                cardElement.className = 'memory-card flipped';
+                cardElement.textContent = card.text;
+                cardElement.dataset.id = card.id;
+                cardElement.dataset.text = card.text;
+                cardElement.dataset.index = index;
+                cardElement.onclick = () => flipCard(cardElement);
+                grid.appendChild(cardElement);
+            });
+            
+            playAudio('Memorize os conceitos de literatura! Em 7 segundos as cartas serão viradas.');
+            
+            gameStarted = false;
+            setTimeout(() => {
+                document.querySelectorAll('.memory-card').forEach(card => {
+                    card.classList.remove('flipped');
+                    card.textContent = '?';
+                });
+                gameStarted = true;
+                playAudio('Agora encontre os pares!');
+            }, 7000);
+        }
+
+        let gameStarted = false;
+        
+        function flipCard(cardElement) {
+            if (!gameStarted || flippedCards.length >= 2 || cardElement.classList.contains('flipped') || cardElement.classList.contains('matched')) {
+                return;
+            }
+            
+            cardElement.classList.add('flipped');
+            cardElement.textContent = cardElement.dataset.text;
+            flippedCards.push(cardElement);
+            
+            if (flippedCards.length === 2) {
+                attempts++;
+                document.getElementById('attempts').textContent = attempts;
+                
+                setTimeout(() => {
+                    checkMatch();
+                }, 1200);
+            }
+        }
+
+        function checkMatch() {
+            const [card1, card2] = flippedCards;
+            
+            if (card1.dataset.id === card2.dataset.id) {
+                card1.classList.add('matched');
+                card2.classList.add('matched');
+                matchedPairs++;
+                document.getElementById('pairs').textContent = matchedPairs;
+                
+                playAudio('Correto! Par encontrado!');
+                
+                if (matchedPairs === 10) {
+                    document.getElementById('final-attempts').textContent = attempts;
+                    document.getElementById('game-over').style.display = 'block';
+                    playAudio(`Parabéns! Você completou o jogo em ${attempts} tentativas!`);
+                }
+            } else {
+                card1.classList.remove('flipped');
+                card2.classList.remove('flipped');
+                card1.textContent = '?';
+                card2.textContent = '?';
+            }
+            
+            flippedCards = [];
+        }
+
+        function playAudio(text) {
+            if ('speechSynthesis' in window) {
+                speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'pt-BR';
+                utterance.rate = 0.9;
+                speechSynthesis.speak(utterance);
+            }
+        }
+
+        function goHome() {
+            window.location.href = 'index.html';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            startGame();
+        });
+    </script>
+</body>
+</html>
